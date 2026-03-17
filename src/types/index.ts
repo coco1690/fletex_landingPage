@@ -1,0 +1,15 @@
+import type { Database } from '../supabase/types'
+
+export type UsuarioRow = Database['public']['Tables']['usuarios']['Row']
+export type ConductorRow = Database['public']['Tables']['conductores']['Row']
+export type AgenciaRow = Database['public']['Tables']['agencias']['Row']
+export type RegionRow = Database['public']['Tables']['regiones']['Row']
+export type VehiculoRow = Database['public']['Tables']['vehiculos']['Row']
+export type RutaRow = Database['public']['Tables']['rutas']['Row']
+export type ViajeRow = Database['public']['Tables']['viajes']['Row']
+export type ReservaRow = Database['public']['Tables']['reservas']['Row']
+export type LiquidacionRow = Database['public']['Tables']['liquidaciones']['Row']
+export type NotificacionRow = Database['public']['Tables']['notificaciones']['Row']
+export type RolUsuario = Database['public']['Enums']['rol_usuario']
+export type EstadoSuscripcion = Database['public']['Enums']['estado_suscripcion']
+export type EstadoViaje = Database['public']['Enums']['estado_viaje']

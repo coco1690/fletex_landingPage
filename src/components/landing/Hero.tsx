@@ -166,7 +166,7 @@ export function Hero() {
             </p>
 
             {/* Badges */}
-            <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap mb-8">
+            <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap mb-3">
               <a
                 href="#"
                 target="_blank"

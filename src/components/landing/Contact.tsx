@@ -1,7 +1,7 @@
 const CONTACTOS = [
-  { icon: '💬', label: 'WhatsApp',           valor: '+57 300 123 4567',  href: 'https://wa.me/573001234567' },
+  { icon: '💬', label: 'WhatsApp',           valor: '+57 3148632751',  href: 'https://wa.me/573148632751' },
   { icon: '📧', label: 'Correo electrónico', valor: 'contacto@fletex.com', href: 'mailto:contacto@fletex.com' },
-  { icon: '📱', label: 'Teléfono',           valor: '+57 300 123 4567',  href: 'tel:+573001234567' },
+  { icon: '📱', label: 'Teléfono',           valor: '+57 3148632751',  href: 'tel:+573148632751' },
 ]
 
 export function Contact() {

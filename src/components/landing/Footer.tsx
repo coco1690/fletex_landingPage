@@ -35,7 +35,7 @@ export function Footer() {
           <div>
             <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3">Contacto</p>
             <div className="flex flex-col gap-2">
-              <a href="https://wa.me/573001234567" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors">💬 WhatsApp</a>
+              <a href="https://wa.me/573148632751" target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors">💬 WhatsApp</a>
               <a href="mailto:contacto@fletex.com" className="text-xs text-muted-foreground hover:text-foreground transition-colors">📧 Email</a>
             </div>
           </div>

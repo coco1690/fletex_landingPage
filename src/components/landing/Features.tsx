@@ -2,9 +2,9 @@ const DATA = [
   { icon: '🗓️', title: 'Reserva en segundos',   desc: 'Elige tu fecha, hora y cupos. Confirmación inmediata en tu celular.' },
   { icon: '📍', title: 'Punto de abordaje',      desc: 'Selecciona el punto más cercano a ti. El conductor sabe dónde recogerte.' },
   { icon: '🎟️', title: 'Tu cupo asegurado',     desc: 'Una vez reservado, nadie te puede quitar tu puesto.' },
-  { icon: '📦', title: 'Envía encomiendas',      desc: 'Rastrea el estado de tus paquetes en tiempo real.' },
+  // { icon: '📦', title: 'Envía encomiendas',      desc: 'Rastrea el estado de tus paquetes en tiempo real.' },
   { icon: '🔔', title: 'Alertas en tiempo real', desc: 'Recibe notificaciones cuando el viaje esté listo para salir.' },
-  { icon: '💵', title: 'Pago al abordar',        desc: 'Reserva gratis. Paga en efectivo al subir. Sin tarjetas.' },
+  // { icon: '💵', title: 'Pago al abordar',        desc: 'Reserva gratis. Paga en efectivo al subir. Sin tarjetas.' },
 ]
 
 export function Features() {

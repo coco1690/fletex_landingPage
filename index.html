@@ -4,6 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script>
+      (() => {
+        try {
+          const storage = localStorage.getItem('fletex-tema')
+          const parsed = storage ? JSON.parse(storage) : null
+          const tema = parsed?.state?.tema ?? 'light'
+
+          document.documentElement.classList.toggle('dark', tema === 'dark')
+        } catch {
+          document.documentElement.classList.remove('dark')
+        }
+      })()
+    </script>
+
     <title>fletex-dashboard</title>
   </head>
   <body>

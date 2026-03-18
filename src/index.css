@@ -1,39 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── DARK MODE (default) ── */
-  --color-background: #0A0F1E;
-  --color-foreground: #F8FAFC;
-  --color-card: #111827;
-  --color-card-foreground: #F8FAFC;
-  --color-primary: #1D9E75;
-  --color-primary-foreground: #FFFFFF;
-  --color-secondary: #1E293B;
-  --color-secondary-foreground: #F8FAFC;
-  --color-muted: #1E293B;
-  --color-muted-foreground: #475569;
-  --color-accent: #1E293B;
-  --color-accent-foreground: #F8FAFC;
-  --color-border: #1E293B;
-  --color-input: #1E293B;
-  --color-ring: #1D9E75;
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #FFFFFF;
-
-  /* Estados */
-  --color-success: #22C55E;
-  --color-success-light: #14532D;
-  --color-warning: #F59E0B;
-  --color-warning-light: #78350F;
-  --color-error: #EF4444;
-  --color-error-light: #7F1D1D;
-  --color-info: #38BDF8;
-  --color-info-light: #0C4A6E;
-
-  --radius: 0.625rem;
-}
-
-.dark {
+  /* ── LIGHT MODE (default) ── */
   --color-background: #F1F5F9;
   --color-foreground: #0F172A;
   --color-card: #FFFFFF;
@@ -52,6 +20,7 @@
   --color-destructive: #DC2626;
   --color-destructive-foreground: #FFFFFF;
 
+  /* Estados */
   --color-success: #16A34A;
   --color-success-light: #DCFCE7;
   --color-warning: #D97706;
@@ -60,12 +29,53 @@
   --color-error-light: #FEE2E2;
   --color-info: #0284C7;
   --color-info-light: #E0F2FE;
+
+  --radius: 0.625rem;
+}
+
+.dark {
+  /* ── DARK MODE ── */
+  --color-background: #0A0F1E;
+  --color-foreground: #F8FAFC;
+  --color-card: #111827;
+  --color-card-foreground: #F8FAFC;
+  --color-primary: #1D9E75;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #1E293B;
+  --color-secondary-foreground: #F8FAFC;
+  --color-muted: #1E293B;
+  --color-muted-foreground: #475569;
+  --color-accent: #1E293B;
+  --color-accent-foreground: #F8FAFC;
+  --color-border: #1E293B;
+  --color-input: #1E293B;
+  --color-ring: #1D9E75;
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-success: #22C55E;
+  --color-success-light: #14532D;
+  --color-warning: #F59E0B;
+  --color-warning-light: #78350F;
+  --color-error: #EF4444;
+  --color-error-light: #7F1D1D;
+  --color-info: #38BDF8;
+  --color-info-light: #0C4A6E;
 }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 56px;
-  /* altura del nav sticky */
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 56px;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 @layer base {
@@ -175,6 +185,10 @@ html {
     color: var(--color-info);
   }
 
+  .text-destructive {
+    color: var(--color-destructive);
+  }
+
   .border-border {
     border-color: var(--color-border);
   }
@@ -187,10 +201,6 @@ html {
     border-color: var(--color-input);
   }
 
-  .text-destructive {
-    color: var(--color-destructive);
-  }
-
   .bg-destructive {
     background-color: var(--color-destructive);
   }
@@ -198,6 +208,4 @@ html {
   .bg-destructive\/10 {
     background-color: color-mix(in srgb, var(--color-destructive) 10%, transparent);
   }
-
-  
 }

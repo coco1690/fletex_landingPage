@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
-  User, Building2, Car, Pencil,
-  PowerOff, Power, DollarSign, UserCog,
+  User, UserCog,
 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 import {
   Select, SelectContent, SelectItem,
   SelectTrigger, SelectValue,
@@ -12,12 +10,14 @@ import { useConductoresStore, type Conductor } from './conductoresStore'
 import { useAuthStore } from '@/store/authStore'
 import { ModalConductor } from './ModalConductor'
 import { ModalPago } from './ModalPago'
-import { MenuAcciones } from '@/components/shared/MenuAcciones'
 import { EstadoBadge } from '@/components/shared/EstadoBadge'
 import { PanelDetalle } from '@/components/shared/PanelDetalle'
 import { TablaPage } from '@/components/shared/TablaPage'
 import { TablaVacia } from '@/components/shared/TablaVacia'
-import { cn } from '@/lib/utils'
+import { Paginacion } from '@/components/shared/Paginacion'
+import { ConductorCard } from './components/ConductorCard'
+import { TablaConductores } from './components/TablaConductores'
+import { Badge } from '@/components/ui/badge'
 
 // ── helpers ──────────────────────────────────────────────
 
@@ -38,9 +38,11 @@ function SuscBadge({ estado }: { estado: string }) {
 export function ConductoresPage() {
   const {
     conductores, cargando, error,
-    cargarConductores, crearConductor,
-    actualizarConductor, toggleEstadoUsuario,
-    registrarPago, limpiarError,
+    paginaActual, totalRegistros, totalPaginas,
+    cargarConductores, cambiarPagina,
+    crearConductor, actualizarConductor,
+    toggleEstadoUsuario, registrarPago,
+    limpiarError,
   } = useConductoresStore()
   const { usuario } = useAuthStore()
 
@@ -53,22 +55,38 @@ export function ConductoresPage() {
   const [conductorPago, setConductorPago]         = useState<Conductor | null>(null)
   const [conductorDetalle, setConductorDetalle]   = useState<Conductor | null>(null)
 
+  // ── carga inicial ─────────────────────────────────────
   useEffect(() => { cargarConductores() }, [])
 
+  // ── recargar al cambiar filtros (server-side) ─────────
+  useEffect(() => {
+    cargarConductores(
+      { estado: filtroEstado, suscripcion: filtroSusc },
+      1,
+    )
+  }, [filtroEstado, filtroSusc])
+
+  // ── filtro local por búsqueda de texto ────────────────
   const filtrados = conductores.filter(c => {
+    const q = busqueda.toLowerCase()
     const nombre   = c.usuario?.nombre?.toLowerCase() ?? ''
     const licencia = c.numero_licencia.toLowerCase()
-    const matchQ   = nombre.includes(busqueda.toLowerCase()) || licencia.includes(busqueda.toLowerCase())
-    const matchE   = filtroEstado === 'todos' || c.usuario?.estado === filtroEstado
-    const matchS   = filtroSusc === 'todas' || c.estado_suscripcion === filtroSusc
-    return matchQ && matchE && matchS
+    return nombre.includes(q) || licencia.includes(q)
   })
+
+  // ── handlers ─────────────────────────────────────────
+  const handleSeleccionar = (c: Conductor) =>
+    setConductorDetalle(conductorDetalle?.id === c.id ? null : c)
+
+  const subtitulo = totalRegistros > 0
+    ? `${totalRegistros} conductor${totalRegistros !== 1 ? 'es' : ''} · página ${paginaActual} de ${totalPaginas}`
+    : 'Sin conductores registrados'
 
   return (
     <>
       <TablaPage
         titulo="Conductores"
-        subtitulo={`${conductores.length} conductor${conductores.length !== 1 ? 'es' : ''} registrado${conductores.length !== 1 ? 's' : ''}`}
+        subtitulo={subtitulo}
         labelBoton="Nuevo conductor"
         placeholder="Buscar por nombre o licencia..."
         busqueda={busqueda}
@@ -92,7 +110,10 @@ export function ConductoresPage() {
         cargando={cargando}
         error={error}
         onLimpiarError={limpiarError}
-        onRefresh={cargarConductores}
+        onRefresh={() => cargarConductores(
+          { estado: filtroEstado, suscripcion: filtroSusc },
+          paginaActual,
+        )}
         onCrear={() => { setConductorEditando(null); setModalAbierto(true) }}
         panelDetalle={conductorDetalle && (
           <PanelDetalle
@@ -139,132 +160,45 @@ export function ConductoresPage() {
             onCrear={() => { setConductorEditando(null); setModalAbierto(true) }}
           />
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border">
-                  {['Conductor', 'Licencia', 'Agencia', 'Vehículo', 'Suscripción', 'Estado', ''].map(h => (
-                    <th key={h} className="text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-4 py-3 first:pl-5 last:pr-5">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {filtrados.map(conductor => {
-                  const esSeleccionado = conductorDetalle?.id === conductor.id
-                  return (
-                    <tr
-                      key={conductor.id}
-                      onClick={() => setConductorDetalle(esSeleccionado ? null : conductor)}
-                      className={cn(
-                        'hover:bg-secondary/30 transition-colors cursor-pointer',
-                        esSeleccionado && 'bg-primary/5 border-l-2 border-l-primary'
-                      )}
-                    >
-                      {/* Conductor */}
-                      <td className="px-4 py-3 pl-5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
-                            <span className="text-xs font-bold text-primary">
-                              {conductor.usuario?.nombre?.charAt(0).toUpperCase() ?? 'C'}
-                            </span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-semibold text-foreground">
-                              {conductor.usuario?.nombre ?? '—'}
-                            </p>
-                            <p className="text-[10px] text-muted-foreground">
-                              {conductor.usuario?.telefono ?? ''}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
+          <>
+            {/* Móvil — cards con scroll */}
+            <div className="md:hidden overflow-y-auto max-h-[calc(100dvh-370px)] divide-y divide-border">
+              {filtrados.map(conductor => (
+                <ConductorCard
+                  key={conductor.id}
+                  conductor={conductor}
+                  esSeleccionado={conductorDetalle?.id === conductor.id}
+                  onSeleccionar={() => handleSeleccionar(conductor)}
+                  onEditar={() => { setConductorEditando(conductor); setModalAbierto(true) }}
+                  onPago={() => { setConductorPago(conductor); setModalPagoAbierto(true) }}
+                  onToggleEstado={() => toggleEstadoUsuario(conductor.usuario_id, conductor.usuario?.estado ?? 'activo')}
+                />
+              ))}
+            </div>
 
-                      {/* Licencia */}
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-mono bg-secondary px-2 py-1 rounded-lg">
-                            {conductor.numero_licencia}
-                          </span>
-                          <span className="text-[10px] text-muted-foreground">
-                            {conductor.categoria_licencia}
-                          </span>
-                        </div>
-                      </td>
+            {/* Desktop — tabla con scroll */}
+            <div className="hidden md:block">
+              <TablaConductores
+                conductores={filtrados}
+                conductorDetalle={conductorDetalle}
+                onSeleccionar={handleSeleccionar}
+                onEditar={(c) => { setConductorEditando(c); setModalAbierto(true) }}
+                onPago={(c) => { setConductorPago(c); setModalPagoAbierto(true) }}
+                onToggleEstado={(c) => toggleEstadoUsuario(c.usuario_id, c.usuario?.estado ?? 'activo')}
+              />
+            </div>
+          </>
+        )}
 
-                      {/* Agencia */}
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-1.5">
-                          <Building2 className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                          <span className="text-xs text-muted-foreground">
-                            {conductor.agencia?.nombre ?? '—'}
-                          </span>
-                        </div>
-                      </td>
-
-                      {/* Vehículo */}
-                      <td className="px-4 py-3">
-                        {conductor.vehiculo ? (
-                          <div className="flex items-center gap-1.5">
-                            <Car className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                            <span className="text-xs font-semibold text-foreground">
-                              {conductor.vehiculo.placa}
-                            </span>
-                          </div>
-                        ) : (
-                          <span className="text-xs text-muted-foreground/50">Sin vehículo</span>
-                        )}
-                      </td>
-
-                      {/* Suscripción */}
-                      <td className="px-4 py-3">
-                        <div className="space-y-1">
-                          <SuscBadge estado={conductor.estado_suscripcion} />
-                          {conductor.fecha_corte && (
-                            <p className="text-[10px] text-muted-foreground">
-                              Vence {new Date(conductor.fecha_corte).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })}
-                            </p>
-                          )}
-                        </div>
-                      </td>
-
-                      {/* Estado */}
-                      <td className="px-4 py-3">
-                        <EstadoBadge estado={conductor.usuario?.estado ?? 'activo'} />
-                      </td>
-
-                      {/* Acciones */}
-                      <td className="px-4 py-3 pr-5" onClick={e => e.stopPropagation()}>
-                        <MenuAcciones items={[
-                          {
-                            icon: <Pencil className="w-3.5 h-3.5" />,
-                            label: 'Editar',
-                            fn: () => { setConductorEditando(conductor); setModalAbierto(true) },
-                          },
-                          {
-                            icon: <DollarSign className="w-3.5 h-3.5" />,
-                            label: 'Registrar pago',
-                            fn: () => { setConductorPago(conductor); setModalPagoAbierto(true) },
-                            separadorAntes: true,
-                          },
-                          {
-                            icon: conductor.usuario?.estado === 'activo'
-                              ? <PowerOff className="w-3.5 h-3.5" />
-                              : <Power className="w-3.5 h-3.5" />,
-                            label: conductor.usuario?.estado === 'activo' ? 'Desactivar' : 'Activar',
-                            fn: () => toggleEstadoUsuario(conductor.usuario_id, conductor.usuario?.estado ?? 'activo'),
-                            danger: conductor.usuario?.estado === 'activo',
-                            separadorAntes: true,
-                          },
-                        ]} />
-                      </td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
+        {totalPaginas > 1 && (
+          <Paginacion
+            paginaActual={paginaActual}
+            totalPaginas={totalPaginas}
+            totalRegistros={totalRegistros}
+            porPagina={8}
+            onCambiar={cambiarPagina}
+            cargando={cargando}
+          />
         )}
       </TablaPage>
 

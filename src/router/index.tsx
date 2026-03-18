@@ -12,6 +12,7 @@ import { ConductoresPage } from '@/features/conductores/ConductoresPage'
 import { VehiculosPage } from '@/features/vehiculos/VehiculosPage'
 import { RutasPage } from '@/features/rutas/RutasPage'
 import { ViajesPage } from '@/features/viajes/ViajesPage'
+import { ReservasPage } from '@/features/reservas/ReservasPage'
 
 
 
@@ -63,7 +64,7 @@ export const router = createBrowserRouter([
           { path: '/dashboard/vehiculos', element: <VehiculosPage /> },
           { path: '/dashboard/rutas', element: <RutasPage /> },
           { path: '/dashboard/viajes', element: <ViajesPage /> },
-          { path: '/dashboard/reservas', element: <Placeholder titulo="Reservas" /> },
+          { path: '/dashboard/reservas', element: <ReservasPage /> },
           { path: '/dashboard/liquidaciones', element: <Placeholder titulo="Liquidaciones" /> },
           { path: '/dashboard/reportes', element: <Placeholder titulo="Reportes" /> },
           { path: '/dashboard/usuarios', element: <Placeholder titulo="Usuarios" /> },

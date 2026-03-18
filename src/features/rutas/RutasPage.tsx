@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import {
-    Route, Building2, MapPin,
-    DollarSign, Milestone, Clock,
-    Pencil, PowerOff, Power, Trash2,
+    Route, Trash2,
 } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
 import {
     Select, SelectContent, SelectItem,
     SelectTrigger, SelectValue,
@@ -16,10 +13,13 @@ import {
 import { Button } from '@/components/ui/button'
 import { useRutasStore, type Ruta } from './rutasStore'
 import { ModalRuta } from './ModalRuta'
-import { MenuAcciones } from '@/components/shared/MenuAcciones'
 import { PanelDetalle } from '@/components/shared/PanelDetalle'
 import { TablaPage } from '@/components/shared/TablaPage'
 import { TablaVacia } from '@/components/shared/TablaVacia'
+import { Paginacion } from '@/components/shared/Paginacion'
+import { RutaCard } from './components/RutaCard'
+import { TablaRutas } from './components/TablaRutas'
+import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 // ── helpers ───────────────────────────────────────────────
@@ -57,45 +57,48 @@ function ActivaBadge({ activa }: { activa: boolean }) {
 export function RutasPage() {
     const {
         rutas, cargando, error,
+        paginaActual, totalRegistros, totalPaginas,
         regionesActivas,
-        cargarRutas, cargarSelects,
+        cargarRutas, cargarSelects, cambiarPagina,
         crearRuta, actualizarRuta, eliminarRuta,
         toggleActiva, limpiarError,
     } = useRutasStore()
 
-    const [busqueda, setBusqueda] = useState('')
-    const [filtroEstado, setFiltroEstado] = useState('todos')
-    const [filtroRegion, setFiltroRegion] = useState('todas')
-    const [modalAbierto, setModalAbierto] = useState(false)
-    const [rutaEditando, setRutaEditando] = useState<Ruta | null>(null)
-    const [rutaDetalle, setRutaDetalle] = useState<Ruta | null>(null)
+    const [busqueda, setBusqueda]           = useState('')
+    const [filtroEstado, setFiltroEstado]   = useState('todos')
+    const [filtroRegion, setFiltroRegion]   = useState('todas')
+    const [modalAbierto, setModalAbierto]   = useState(false)
+    const [rutaEditando, setRutaEditando]   = useState<Ruta | null>(null)
+    const [rutaDetalle, setRutaDetalle]     = useState<Ruta | null>(null)
     const [rutaEliminando, setRutaEliminando] = useState<Ruta | null>(null)
 
-
     // ── carga inicial ─────────────────────────────────────
-    useEffect(() => {
-        cargarRutas()
-        cargarSelects()
-    }, [])
+    useEffect(() => { cargarRutas(); cargarSelects() }, [])
 
-    // ── filtros ───────────────────────────────────────────
+    // ── recargar al cambiar filtros (server-side) ─────────
+    useEffect(() => {
+        cargarRutas(
+            { estado: filtroEstado, region: filtroRegion !== 'todas' ? filtroRegion : undefined },
+            1,
+        )
+    }, [filtroEstado, filtroRegion])
+
+    // ── filtro local por búsqueda de texto ────────────────
     const filtradas = rutas.filter(r => {
-        const matchQ = r.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            (r as any).agencia_origen?.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            (r as any).agencia_destino?.nombre.toLowerCase().includes(busqueda.toLowerCase())
-        const matchE = filtroEstado === 'todos' ||
-            (filtroEstado === 'activa' && r.activa) ||
-            (filtroEstado === 'inactiva' && !r.activa)
-        const matchR = filtroRegion === 'todas' ||
-            (r as any).region?.nombre === filtroRegion
-        return matchQ && matchE && matchR
+        const q = busqueda.toLowerCase()
+        return (
+            r.nombre.toLowerCase().includes(q) ||
+            ((r as any).agencia_origen?.nombre ?? '').toLowerCase().includes(q) ||
+            ((r as any).agencia_destino?.nombre ?? '').toLowerCase().includes(q)
+        )
     })
 
     // ── handlers ─────────────────────────────────────────
-    const handleGuardar = async (datos: any) => {
-        if (rutaEditando) return actualizarRuta(rutaEditando.id, datos)
-        return crearRuta(datos)
-    }
+    const abrirCrear  = () => { setRutaEditando(null); setModalAbierto(true) }
+    const abrirEditar = (ruta: Ruta) => { setRutaEditando(ruta); setModalAbierto(true) }
+
+    const handleGuardar = async (datos: any) =>
+        rutaEditando ? actualizarRuta(rutaEditando.id, datos) : crearRuta(datos)
 
     const handleEliminar = async (ruta: Ruta) => {
         const ok = await eliminarRuta(ruta.id)
@@ -103,21 +106,18 @@ export function RutasPage() {
         setRutaEliminando(null)
     }
 
-    const abrirCrear = () => {
-        setRutaEditando(null)
-        setModalAbierto(true)
-    }
+    const handleSeleccionar = (ruta: Ruta) =>
+        setRutaDetalle(rutaDetalle?.id === ruta.id ? null : ruta)
 
-    const abrirEditar = (ruta: Ruta) => {
-        setRutaEditando(ruta)
-        setModalAbierto(true)
-    }
+    const subtitulo = totalRegistros > 0
+        ? `${totalRegistros} ruta${totalRegistros !== 1 ? 's' : ''} · página ${paginaActual} de ${totalPaginas}`
+        : 'Sin rutas registradas'
 
     return (
         <>
             <TablaPage
                 titulo="Rutas"
-                subtitulo={`${rutas.length} ruta${rutas.length !== 1 ? 's' : ''} registrada${rutas.length !== 1 ? 's' : ''}`}
+                subtitulo={subtitulo}
                 labelBoton="Nueva ruta"
                 placeholder="Buscar por nombre o agencia..."
                 busqueda={busqueda}
@@ -138,7 +138,7 @@ export function RutasPage() {
                             <SelectContent>
                                 <SelectItem value="todas">Todas las regiones</SelectItem>
                                 {regionesActivas.map(r => (
-                                    <SelectItem key={r.id} value={r.nombre}>{r.nombre}</SelectItem>
+                                    <SelectItem key={r.id} value={r.id}>{r.nombre}</SelectItem>
                                 ))}
                             </SelectContent>
                         </Select>
@@ -147,7 +147,10 @@ export function RutasPage() {
                 cargando={cargando}
                 error={error}
                 onLimpiarError={limpiarError}
-                onRefresh={cargarRutas}
+                onRefresh={() => cargarRutas(
+                    { estado: filtroEstado, region: filtroRegion !== 'todas' ? filtroRegion : undefined },
+                    paginaActual,
+                )}
                 onCrear={abrirCrear}
                 panelDetalle={rutaDetalle && (
                     <PanelDetalle
@@ -161,22 +164,10 @@ export function RutasPage() {
                             { valor: formatDuracion(rutaDetalle.duracion_estimada_min), label: 'Duración' },
                         ]}
                         campos={[
-                            {
-                                label: 'Origen',
-                                valor: (rutaDetalle as any).agencia_origen?.nombre ?? '—',
-                            },
-                            {
-                                label: 'Destino',
-                                valor: (rutaDetalle as any).agencia_destino?.nombre ?? '—',
-                            },
-                            {
-                                label: 'Distancia',
-                                valor: rutaDetalle.distancia_km ? `${rutaDetalle.distancia_km} km` : '—',
-                            },
-                            {
-                                label: 'Región',
-                                valor: (rutaDetalle as any).region?.nombre ?? '—',
-                            },
+                            { label: 'Origen', valor: (rutaDetalle as any).agencia_origen?.nombre ?? '—' },
+                            { label: 'Destino', valor: (rutaDetalle as any).agencia_destino?.nombre ?? '—' },
+                            { label: 'Distancia', valor: rutaDetalle.distancia_km ? `${rutaDetalle.distancia_km} km` : '—' },
+                            { label: 'Región', valor: (rutaDetalle as any).region?.nombre ?? '—' },
                             {
                                 label: 'Creada',
                                 valor: new Date(rutaDetalle.fecha_creacion).toLocaleDateString('es-CO', {
@@ -201,133 +192,45 @@ export function RutasPage() {
                         onCrear={abrirCrear}
                     />
                 ) : (
-                    <div className="overflow-x-auto">
-                        <table className="w-full">
-                            <thead>
-                                <tr className="border-b border-border">
-                                    {['Ruta', 'Origen → Destino', 'Región', 'Precio', 'Distancia', 'Duración', 'Estado', ''].map(h => (
-                                        <th
-                                            key={h}
-                                            className="text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-4 py-3 first:pl-5 last:pr-5"
-                                        >
-                                            {h}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-border">
-                                {filtradas.map(ruta => {
-                                    const esSeleccionada = rutaDetalle?.id === ruta.id
+                    <>
+                        {/* Móvil — cards con scroll */}
+                        <div className="md:hidden overflow-y-auto max-h-[calc(100dvh-370px)] divide-y divide-border">
+                            {filtradas.map(ruta => (
+                                <RutaCard
+                                    key={ruta.id}
+                                    ruta={ruta}
+                                    esSeleccionada={rutaDetalle?.id === ruta.id}
+                                    onSeleccionar={() => handleSeleccionar(ruta)}
+                                    onEditar={() => abrirEditar(ruta)}
+                                    onEliminar={() => setRutaEliminando(ruta)}
+                                    onToggleActiva={() => toggleActiva(ruta.id, ruta.activa)}
+                                />
+                            ))}
+                        </div>
 
-                                    return (
-                                        <tr
-                                            key={ruta.id}
-                                            onClick={() => setRutaDetalle(esSeleccionada ? null : ruta)}
-                                            className={cn(
-                                                'hover:bg-secondary/30 transition-colors cursor-pointer',
-                                                esSeleccionada && 'bg-primary/5 border-l-2 border-l-primary'
-                                            )}
-                                        >
-                                            {/* Nombre ruta */}
-                                            <td className="px-4 py-3 pl-5">
-                                                <div className="flex items-center gap-2.5">
-                                                    <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
-                                                        <Route className="w-4 h-4 text-primary" />
-                                                    </div>
-                                                    <span className="text-sm font-semibold text-foreground">
-                                                        {ruta.nombre}
-                                                    </span>
-                                                </div>
-                                            </td>
+                        {/* Desktop — tabla con scroll */}
+                        <div className="hidden md:block">
+                            <TablaRutas
+                                rutas={filtradas}
+                                rutaDetalle={rutaDetalle}
+                                onSeleccionar={handleSeleccionar}
+                                onEditar={abrirEditar}
+                                onEliminar={setRutaEliminando}
+                                onToggleActiva={(ruta) => toggleActiva(ruta.id, ruta.activa)}
+                            />
+                        </div>
+                    </>
+                )}
 
-                                            {/* Origen → Destino */}
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                                    <Building2 className="w-3 h-3 shrink-0" />
-                                                    <span>{(ruta as any).agencia_origen?.nombre ?? '—'}</span>
-                                                    <span className="text-muted-foreground/40 mx-0.5">→</span>
-                                                    <span>{(ruta as any).agencia_destino?.nombre ?? '—'}</span>
-                                                </div>
-                                            </td>
-
-                                            {/* Región */}
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1.5">
-                                                    <MapPin className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
-                                                    <span className="text-xs text-muted-foreground">
-                                                        {(ruta as any).region?.nombre ?? '—'}
-                                                    </span>
-                                                </div>
-                                            </td>
-
-                                            {/* Precio */}
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1">
-                                                    <DollarSign className="w-3 h-3 text-muted-foreground" />
-                                                    <span className="text-sm font-bold text-foreground">
-                                                        {formatPrecio(ruta.precio_pasaje)}
-                                                    </span>
-                                                </div>
-                                            </td>
-
-                                            {/* Distancia */}
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1">
-                                                    <Milestone className="w-3 h-3 text-muted-foreground" />
-                                                    <span className="text-xs text-muted-foreground">
-                                                        {ruta.distancia_km ? `${ruta.distancia_km} km` : '—'}
-                                                    </span>
-                                                </div>
-                                            </td>
-
-                                            {/* Duración */}
-                                            <td className="px-4 py-3">
-                                                <div className="flex items-center gap-1">
-                                                    <Clock className="w-3 h-3 text-muted-foreground" />
-                                                    <span className="text-xs text-muted-foreground">
-                                                        {formatDuracion(ruta.duracion_estimada_min)}
-                                                    </span>
-                                                </div>
-                                            </td>
-
-                                            {/* Estado */}
-                                            <td className="px-4 py-3">
-                                                <ActivaBadge activa={ruta.activa} />
-                                            </td>
-
-                                            {/* Acciones */}
-                                            <td className="px-4 py-3 pr-5" onClick={e => e.stopPropagation()}>
-                                                <MenuAcciones items={[
-                                                    {
-                                                        icon: <Pencil className="w-3.5 h-3.5" />,
-                                                        label: 'Editar',
-                                                        fn: () => abrirEditar(ruta),
-                                                    },
-                                                    {
-                                                        icon: <Trash2 className="w-3.5 h-3.5" />,
-                                                        label: 'Eliminar',
-                                                        fn: () => setRutaEliminando(ruta),
-                                                        danger: true,
-                                                        separadorAntes: true,
-                                                    },
-                                                    {
-                                                        icon: ruta.activa
-                                                            ? <PowerOff className="w-3.5 h-3.5" />
-                                                            : <Power className="w-3.5 h-3.5" />,
-                                                        label: ruta.activa ? 'Desactivar' : 'Activar',
-                                                        fn: () => toggleActiva(ruta.id, ruta.activa),
-                                                        danger: ruta.activa,
-                                                        separadorAntes: true,
-                                                    },
-
-                                                ]} />
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
-                    </div>
+                {totalPaginas > 1 && (
+                    <Paginacion
+                        paginaActual={paginaActual}
+                        totalPaginas={totalPaginas}
+                        totalRegistros={totalRegistros}
+                        porPagina={8}
+                        onCambiar={cambiarPagina}
+                        cargando={cargando}
+                    />
                 )}
             </TablaPage>
 
@@ -352,9 +255,7 @@ export function RutasPage() {
                                 </div>
                                 <div>
                                     <DialogTitle>Eliminar ruta</DialogTitle>
-                                    <DialogDescription>
-                                        Esta acción no se puede deshacer
-                                    </DialogDescription>
+                                    <DialogDescription>Esta acción no se puede deshacer</DialogDescription>
                                 </div>
                             </div>
                         </DialogHeader>
@@ -376,11 +277,7 @@ export function RutasPage() {
                             </div>
 
                             <div className="flex gap-3">
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setRutaEliminando(null)}
-                                    className="flex-1"
-                                >
+                                <Button variant="outline" onClick={() => setRutaEliminando(null)} className="flex-1">
                                     Cancelar
                                 </Button>
                                 <Button
@@ -398,8 +295,3 @@ export function RutasPage() {
         </>
     )
 }
-
-
-
-
-

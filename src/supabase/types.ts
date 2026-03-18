@@ -955,8 +955,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -968,15 +970,21 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         Insert: {
           cancelada_por?: string | null
           confirmado_por?: string | null
           cupos_solicitados?: number
           estado?: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago?: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje?: string | null
           fecha_cancelacion?: string | null
+          fecha_pago?: string | null
           fecha_reserva?: string
           id?: string
           motivo_cancelacion?: string | null
@@ -988,15 +996,21 @@ export type Database = {
           punto_abordaje_id?: string | null
           updated_at?: string
           valor_comision: number
+          valor_total?: number
           viaje_id: string
+          wompi_link_id?: string | null
+          wompi_link_url?: string | null
+          wompi_transaction_id?: string | null
         }
         Update: {
           cancelada_por?: string | null
           confirmado_por?: string | null
           cupos_solicitados?: number
           estado?: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago?: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje?: string | null
           fecha_cancelacion?: string | null
+          fecha_pago?: string | null
           fecha_reserva?: string
           id?: string
           motivo_cancelacion?: string | null
@@ -1008,7 +1022,11 @@ export type Database = {
           punto_abordaje_id?: string | null
           updated_at?: string
           valor_comision?: number
+          valor_total?: number
           viaje_id?: string
+          wompi_link_id?: string | null
+          wompi_link_url?: string | null
+          wompi_transaction_id?: string | null
         }
         Relationships: [
           {
@@ -1594,8 +1612,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -1607,7 +1627,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -1696,8 +1720,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -1709,7 +1735,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -1729,8 +1759,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -1742,7 +1774,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -1796,8 +1832,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -1809,7 +1847,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -1863,8 +1905,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -1876,7 +1920,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -2044,8 +2092,10 @@ export type Database = {
           confirmado_por: string | null
           cupos_solicitados: number
           estado: Database["public"]["Enums"]["estado_reserva"]
+          estado_pago: Database["public"]["Enums"]["estado_pago"]
           fecha_abordaje: string | null
           fecha_cancelacion: string | null
+          fecha_pago: string | null
           fecha_reserva: string
           id: string
           motivo_cancelacion: string | null
@@ -2057,7 +2107,11 @@ export type Database = {
           punto_abordaje_id: string | null
           updated_at: string
           valor_comision: number
+          valor_total: number
           viaje_id: string
+          wompi_link_id: string | null
+          wompi_link_url: string | null
+          wompi_transaction_id: string | null
         }
         SetofOptions: {
           from: "*"
@@ -2235,6 +2289,7 @@ export type Database = {
         | "perdida"
       estado_general: "activo" | "inactivo" | "pendiente"
       estado_liquidacion: "pendiente" | "pagado" | "en_disputa"
+      estado_pago: "pendiente" | "pagado" | "fallido" | "expirado"
       estado_planilla: "generada" | "completada" | "anulada"
       estado_reserva: "reservada" | "abordada" | "no_show" | "cancelada"
       estado_suscripcion:
@@ -2411,6 +2466,7 @@ export const Constants = {
       ],
       estado_general: ["activo", "inactivo", "pendiente"],
       estado_liquidacion: ["pendiente", "pagado", "en_disputa"],
+      estado_pago: ["pendiente", "pagado", "fallido", "expirado"],
       estado_planilla: ["generada", "completada", "anulada"],
       estado_reserva: ["reservada", "abordada", "no_show", "cancelada"],
       estado_suscripcion: [

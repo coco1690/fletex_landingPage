@@ -15,8 +15,10 @@ import { ViajesPage } from '@/features/viajes/ViajesPage'
 
 
 
+
 // dashboards por rol
 import { SuperAdminHome } from '@/features/dashboard/SuperAdminHome'
+import { PagoResultadoPage } from '@/pages/PagoResultadoPage'
 
 
 // páginas placeholder — las iremos construyendo
@@ -36,6 +38,7 @@ export const router = createBrowserRouter([
     element: <PublicLayout />,
     children: [
       { path: '/', element: <LandingPage /> },
+      { path: '/pago-resultado', element: <PagoResultadoPage /> },
     ],
   },
   {

@@ -61,7 +61,7 @@ export function AgenciasPage() {
   const handleSeleccionar = (a: Agencia) =>
     setAgenciaDetalle(agenciaDetalle?.id === a.id ? null : a)
 
-  const handleGuardar = async (datos: any) =>
+  const handleGuardar = async (datos: { nombre: string; codigo: string; telefono: string; direccion: string; region_id: string }) =>
     agenciaEditando ? actualizarAgencia(agenciaEditando.id, datos) : crearAgencia(datos)
 
   const buildFiltros = () => ({
@@ -108,7 +108,7 @@ export function AgenciasPage() {
           <PanelDetalle
             titulo="Detalle agencia"
             nombre={agenciaDetalle.nombre}
-            subtitulo={(agenciaDetalle as any).region?.nombre}
+            subtitulo={agenciaDetalle.region?.nombre}
             badge={<EstadoBadge estado={agenciaDetalle.estado} />}
             icono={<Building2 className="w-7 h-7 text-primary" />}
             stats={[
@@ -117,10 +117,10 @@ export function AgenciasPage() {
             ]}
             campos={[
               { label: 'Código', valor: agenciaDetalle.codigo },
-              { label: 'Región', valor: (agenciaDetalle as any).region?.nombre ?? '—' },
+              { label: 'Región', valor: agenciaDetalle.region?.nombre ?? '—' },
               { label: 'Teléfono', valor: agenciaDetalle.telefono ?? 'No registrado' },
               { label: 'Dirección', valor: agenciaDetalle.direccion ?? 'No registrada' },
-              { label: 'Encargado', valor: (agenciaDetalle as any).encargado?.nombre ?? 'Sin asignar' },
+              { label: 'Encargado', valor: agenciaDetalle.encargado?.nombre ?? 'Sin asignar' },
               {
                 label: 'Creada',
                 valor: new Date(agenciaDetalle.fecha_creacion).toLocaleDateString('es-CO', {

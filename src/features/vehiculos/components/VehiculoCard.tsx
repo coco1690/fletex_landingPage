@@ -34,7 +34,7 @@ export function VehiculoCard({
     vehiculo, esSeleccionado,
     onSeleccionar, onEditar, onAsignarConductor, onCambiarEstado,
 }: Props) {
-    const conductor = (vehiculo as any).conductor?.usuario
+    const conductor = vehiculo.conductor
 
     return (
         <div
@@ -104,7 +104,7 @@ export function VehiculoCard({
                 </span>
                 <div className="flex items-center gap-1">
                     <Building2 className="w-3 h-3" />
-                    <span>{(vehiculo as any).agencia?.nombre ?? '—'}</span>
+                    <span>{vehiculo.agencia?.nombre ?? '—'}</span>
                 </div>
                 <div className="flex items-center gap-1">
                     <Users className="w-3 h-3" />

@@ -148,8 +148,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
             }))
 
             set({ viajes, totalRegistros: total, totalPaginas })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         } finally {
             set({ cargando: false })
         }
@@ -198,10 +198,11 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
                     .order('nombre'),
             ])
 
-            const conductoresOpciones: ConductorOpcion[] = (rawConductores ?? []).map(c => ({
+            type ConductorRaw = { id: string; usuario: { nombre: string } | null; vehiculo: { placa: string } | null }
+            const conductoresOpciones: ConductorOpcion[] = ((rawConductores ?? []) as ConductorRaw[]).map(c => ({
                 id: c.id,
-                nombre: (c.usuario as any)?.nombre ?? '—',
-                placa: (c.vehiculo as any)?.placa ?? null,
+                nombre: c.usuario?.nombre ?? '—',
+                placa: c.vehiculo?.placa ?? null,
             }))
 
             set({
@@ -210,8 +211,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
                 vehiculosOpciones: vehiculos ?? [],
                 puntosAbordajeOpciones: puntos ?? [],
             })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         }
     },
 
@@ -233,8 +234,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
             // volver a página 1 al crear
             await get().cargarViajes(get().filtrosActivos, 1)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -249,8 +250,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
             if (error) throw error
             await get().cargarViajes(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -271,8 +272,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
             if (error) throw error
             await get().cargarViajes(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -292,8 +293,8 @@ export const useViajesStore = create<ViajesState>((set, get) => ({
                 : paginaActual
             await get().cargarViajes(filtrosActivos, nuevaPagina)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })

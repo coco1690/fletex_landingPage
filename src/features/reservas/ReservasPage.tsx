@@ -58,9 +58,9 @@ export function ReservasPage() {
   // ── filtro local búsqueda ─────────────────────────────
   const filtrados = reservas.filter(r => {
     const q         = busqueda.toLowerCase()
-    const pasajero  = (r as any).pasajero?.nombre?.toLowerCase() ?? ''
-    const ruta      = (r as any).viaje?.ruta?.nombre?.toLowerCase() ?? ''
-    const telefono  = (r as any).pasajero?.telefono?.toLowerCase() ?? ''
+    const pasajero  = r.pasajero?.nombre?.toLowerCase() ?? ''
+    const ruta      = r.viaje?.ruta?.nombre?.toLowerCase() ?? ''
+    const telefono  = r.pasajero?.telefono?.toLowerCase() ?? ''
     return pasajero.includes(q) || ruta.includes(q) || telefono.includes(q)
   })
 
@@ -161,8 +161,8 @@ export function ReservasPage() {
         panelDetalle={reservaDetalle && (
           <PanelDetalle
             titulo="Detalle reserva"
-            nombre={(reservaDetalle as any).pasajero?.nombre ?? '—'}
-            subtitulo={(reservaDetalle as any).pasajero?.telefono ?? 'Sin teléfono'}
+            nombre={reservaDetalle.pasajero?.nombre ?? '—'}
+            subtitulo={reservaDetalle.pasajero?.telefono ?? 'Sin teléfono'}
             badge={
               <div className="flex items-center gap-2 flex-wrap justify-center">
                 <EstadoReservaBadge estado={reservaDetalle.estado} />
@@ -175,18 +175,18 @@ export function ReservasPage() {
               { valor: `$${reservaDetalle.valor_total.toLocaleString('es-CO')}`,  label: 'Total' },
             ]}
             campos={[
-              { label: 'Ruta',         valor: (reservaDetalle as any).viaje?.ruta?.nombre ?? '—' },
-              { label: 'Origen',       valor: (reservaDetalle as any).viaje?.ruta?.agencia_origen?.nombre ?? '—' },
-              { label: 'Destino',      valor: (reservaDetalle as any).viaje?.ruta?.agencia_destino?.nombre ?? '—' },
-              { label: 'Salida',       valor: (reservaDetalle as any).viaje?.hora_salida_programada
-                ? new Date((reservaDetalle as any).viaje.hora_salida_programada).toLocaleString('es-CO', {
+              { label: 'Ruta',         valor: reservaDetalle.viaje?.ruta?.nombre ?? '—' },
+              { label: 'Origen',       valor: reservaDetalle.viaje?.ruta?.agencia_origen?.nombre ?? '—' },
+              { label: 'Destino',      valor: reservaDetalle.viaje?.ruta?.agencia_destino?.nombre ?? '—' },
+              { label: 'Salida',       valor: reservaDetalle.viaje?.hora_salida_programada
+                ? new Date(reservaDetalle.viaje.hora_salida_programada).toLocaleString('es-CO', {
                     day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
                   })
                 : '—' },
               { label: 'Precio/cupo',  valor: `$${reservaDetalle.precio_pasaje.toLocaleString('es-CO')}` },
               { label: 'Comisión',     valor: `$${reservaDetalle.valor_comision.toLocaleString('es-CO')}` },
               { label: 'Abordaje',     valor: reservaDetalle.punto_abordaje
-                ? (reservaDetalle as any).punto_abordaje?.nombre
+                ? reservaDetalle.punto_abordaje?.nombre
                 : 'No especificado' },
               { label: 'Fecha reserva', valor: new Date(reservaDetalle.fecha_reserva).toLocaleString('es-CO', {
                   day: 'numeric', month: 'short', year: 'numeric',
@@ -264,7 +264,7 @@ export function ReservasPage() {
                 <div>
                   <DialogTitle>Cancelar reserva</DialogTitle>
                   <DialogDescription>
-                    {(reservaCancelando as any).pasajero?.nombre ?? 'Pasajero'}
+                    {reservaCancelando.pasajero?.nombre ?? 'Pasajero'}
                   </DialogDescription>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export function ReservasPage() {
               <div className="bg-secondary/50 rounded-xl p-3 space-y-1">
                 <p className="text-[10px] text-muted-foreground">Reserva a cancelar</p>
                 <p className="text-sm font-semibold text-foreground">
-                  {(reservaCancelando as any).viaje?.ruta?.nombre ?? '—'}
+                  {reservaCancelando.viaje?.ruta?.nombre ?? '—'}
                 </p>
                 <p className="text-[10px] text-muted-foreground">
                   {reservaCancelando.cupos_solicitados} cupo{reservaCancelando.cupos_solicitados !== 1 ? 's' : ''}{' '}

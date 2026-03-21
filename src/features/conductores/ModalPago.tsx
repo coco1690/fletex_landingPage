@@ -6,10 +6,8 @@ import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { supabase } from '@/supabase/client'
+import { useConductoresStore } from './conductoresStore'
 import type { Conductor, RegistrarPagoParams } from './conductoresStore'
-
-interface Plan { id: string; nombre: string; precio: number; duracion_dias: number }
 
 interface Props {
   conductor: Conductor
@@ -19,7 +17,7 @@ interface Props {
 }
 
 export function ModalPago({ conductor, onGuardar, onCerrar, cargando }: Props) {
-  const [planes, setPlanes]         = useState<Plan[]>([])
+  const { planes, cargarPlanes } = useConductoresStore()
   const [planId, setPlanId]         = useState('')
   const [valor, setValor]           = useState('')
   const [referencia, setReferencia] = useState('')
@@ -28,14 +26,15 @@ export function ModalPago({ conductor, onGuardar, onCerrar, cargando }: Props) {
   const [error, setError]           = useState('')
 
   useEffect(() => {
-    supabase.from('planes_suscripcion')
-      .select('id, nombre, precio, duracion_dias')
-      .eq('activo', true).order('precio')
-      .then(({ data }) => {
-        setPlanes(data ?? [])
-        if (data?.[0]) { setPlanId(data[0].id); setValor(String(data[0].precio)) }
-      })
-  }, [])
+    cargarPlanes()
+  }, [cargarPlanes])
+
+  useEffect(() => {
+    if (planes.length > 0 && !planId) {
+      setPlanId(planes[0].id)
+      setValor(String(planes[0].precio))
+    }
+  }, [planes, planId])
 
   const handlePlanChange = (id: string) => {
     setPlanId(id)

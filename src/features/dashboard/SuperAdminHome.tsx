@@ -128,12 +128,24 @@ function StatCard({ stat }: { stat: typeof STATS[0] }) {
 
 // ── Tooltip personalizado ─────────────────────────────────
 
-function CustomTooltip({ active, payload, label }: any) {
+interface TooltipPayloadItem {
+  name: string
+  value: number
+  color: string
+}
+
+interface CustomTooltipProps {
+  active?: boolean
+  payload?: TooltipPayloadItem[]
+  label?: string
+}
+
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null
   return (
     <div className="bg-card border border-border rounded-xl px-3 py-2.5 shadow-xl text-xs">
       <p className="font-bold text-foreground mb-1">{label}</p>
-      {payload.map((p: any) => (
+      {payload.map((p) => (
         <p key={p.name} style={{ color: p.color }}>
           {p.name === 'viajes' ? 'Viajes' : 'Reservas'}: <span className="font-bold">{p.value}</span>
         </p>

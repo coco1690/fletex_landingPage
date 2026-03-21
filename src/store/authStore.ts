@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { supabase } from '../supabase/client'
 import type { UsuarioRow } from '../types'
-import { ROLES_DASHBOARD } from '../lib/constants'
+import { ROLES_DASHBOARD, type Rol } from '../lib/constants'
 
 interface AuthState {
   usuario: UsuarioRow | null
@@ -9,6 +9,7 @@ interface AuthState {
   error: string | null
   listo: boolean
 
+  inicializarAuth: () => () => void
   iniciarSesion: (email: string, password: string) => Promise<void>
   cerrarSesion: () => Promise<void>
   cargarPerfil: () => Promise<void>
@@ -21,6 +22,26 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   error: null,
   listo: false,
 
+  inicializarAuth: () => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) get().cargarPerfil()
+      else set({ listo: true })
+    })
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_OUT') {
+          set({ usuario: null, listo: true })
+        }
+        if (event === 'SIGNED_IN' && session) {
+          get().cargarPerfil()
+        }
+      }
+    )
+
+    return () => subscription.unsubscribe()
+  },
+
   iniciarSesion: async (email, password) => {
     set({ cargando: true, error: null })
     try {
@@ -32,8 +53,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (!data.user) throw new Error('No se pudo iniciar sesión')
 
       await get().cargarPerfil()
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
     } finally {
       set({ cargando: false })
     }
@@ -54,14 +75,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       if (!data) throw new Error('Usuario no encontrado')
 
       // solo roles del dashboard pueden acceder
-      if (!ROLES_DASHBOARD.includes(data.rol as any)) {
+      if (!ROLES_DASHBOARD.includes(data.rol as Rol)) {
         await supabase.auth.signOut()
         throw new Error('No tienes permisos para acceder al dashboard')
       }
 
       set({ usuario: data })
-    } catch (e: any) {
-      set({ error: e.message, usuario: null })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido', usuario: null })
     } finally {
       set({ listo: true })
     }
@@ -72,8 +93,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     try {
       await supabase.auth.signOut()
       set({ usuario: null })
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
     } finally {
       set({ cargando: false })
     }

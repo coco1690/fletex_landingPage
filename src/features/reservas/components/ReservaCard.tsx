@@ -29,15 +29,15 @@ export function ReservaCard({
         <div className="flex items-start gap-2.5 flex-1 min-w-0">
           <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center shrink-0 mt-0.5">
             <span className="text-sm font-bold text-primary">
-              {(reserva as any).pasajero?.nombre?.charAt(0).toUpperCase() ?? 'P'}
+              {reserva.pasajero?.nombre?.charAt(0).toUpperCase() ?? 'P'}
             </span>
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">
-              {(reserva as any).pasajero?.nombre ?? '—'}
+              {reserva.pasajero?.nombre ?? '—'}
             </p>
             <p className="text-[10px] text-muted-foreground mt-0.5">
-              {(reserva as any).pasajero?.telefono ?? 'Sin teléfono'}
+              {reserva.pasajero?.telefono ?? 'Sin teléfono'}
             </p>
           </div>
         </div>
@@ -59,7 +59,7 @@ export function ReservaCard({
       <div className="mt-3 flex items-center gap-1.5">
         <Route className="w-3 h-3 text-muted-foreground shrink-0" />
         <span className="text-[10px] text-muted-foreground truncate">
-          {(reserva as any).viaje?.ruta?.nombre ?? '—'}
+          {reserva.viaje?.ruta?.nombre ?? '—'}
         </span>
       </div>
 
@@ -68,8 +68,8 @@ export function ReservaCard({
         <div className="flex items-center gap-1.5">
           <Clock className="w-3 h-3 text-muted-foreground shrink-0" />
           <span className="text-[10px] text-foreground">
-            {(reserva as any).viaje?.hora_salida_programada
-              ? new Date((reserva as any).viaje.hora_salida_programada).toLocaleString('es-CO', {
+            {reserva.viaje?.hora_salida_programada
+              ? new Date(reserva.viaje.hora_salida_programada).toLocaleString('es-CO', {
                   day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
                 })
               : '—'}

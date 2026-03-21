@@ -91,9 +91,9 @@ export function TablaRutas({
                                 <td className="px-4 py-3">
                                     <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                                         <Building2 className="w-3 h-3 shrink-0" />
-                                        <span>{(ruta as any).agencia_origen?.nombre ?? '—'}</span>
+                                        <span>{ruta.agencia_origen?.nombre ?? '—'}</span>
                                         <span className="text-muted-foreground/40 mx-0.5">→</span>
-                                        <span>{(ruta as any).agencia_destino?.nombre ?? '—'}</span>
+                                        <span>{ruta.agencia_destino?.nombre ?? '—'}</span>
                                     </div>
                                 </td>
 
@@ -101,7 +101,7 @@ export function TablaRutas({
                                     <div className="flex items-center gap-1.5">
                                         <MapPin className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                                         <span className="text-xs text-muted-foreground">
-                                            {(ruta as any).region?.nombre ?? '—'}
+                                            {ruta.region?.nombre ?? '—'}
                                         </span>
                                     </div>
                                 </td>

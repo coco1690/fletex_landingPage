@@ -48,15 +48,15 @@ export function TablaReservas({
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
                       <span className="text-xs font-bold text-primary">
-                        {(reserva as any).pasajero?.nombre?.charAt(0).toUpperCase() ?? 'P'}
+                        {reserva.pasajero?.nombre?.charAt(0).toUpperCase() ?? 'P'}
                       </span>
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">
-                        {(reserva as any).pasajero?.nombre ?? '—'}
+                        {reserva.pasajero?.nombre ?? '—'}
                       </p>
                       <p className="text-[10px] text-muted-foreground">
-                        {(reserva as any).pasajero?.telefono ?? 'Sin teléfono'}
+                        {reserva.pasajero?.telefono ?? 'Sin teléfono'}
                       </p>
                     </div>
                   </div>
@@ -68,11 +68,11 @@ export function TablaReservas({
                     <Route className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                     <div>
                       <p className="text-xs text-foreground">
-                        {(reserva as any).viaje?.ruta?.nombre ?? '—'}
+                        {reserva.viaje?.ruta?.nombre ?? '—'}
                       </p>
                       <p className="text-[10px] text-muted-foreground">
-                        {(reserva as any).viaje?.ruta?.agencia_origen?.nombre} →{' '}
-                        {(reserva as any).viaje?.ruta?.agencia_destino?.nombre}
+                        {reserva.viaje?.ruta?.agencia_origen?.nombre} →{' '}
+                        {reserva.viaje?.ruta?.agencia_destino?.nombre}
                       </p>
                     </div>
                   </div>
@@ -84,14 +84,14 @@ export function TablaReservas({
                     <Clock className="w-3 h-3 text-muted-foreground shrink-0" />
                     <div>
                       <p className="text-xs text-foreground">
-                        {(reserva as any).viaje?.hora_salida_programada
-                          ? new Date((reserva as any).viaje.hora_salida_programada)
+                        {reserva.viaje?.hora_salida_programada
+                          ? new Date(reserva.viaje.hora_salida_programada)
                               .toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' })
                           : '—'}
                       </p>
                       <p className="text-[10px] text-muted-foreground">
-                        {(reserva as any).viaje?.hora_salida_programada
-                          ? new Date((reserva as any).viaje.hora_salida_programada)
+                        {reserva.viaje?.hora_salida_programada
+                          ? new Date(reserva.viaje.hora_salida_programada)
                               .toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })
                           : ''}
                       </p>

@@ -28,7 +28,7 @@ export function ModalAsignarEncargado({ agencia, onCerrar, cargando }: Props) {
   const [encargadoId, setEncargadoId] = useState('')
   const [error,       setError]       = useState('')
 
-  const encargadoActual = (agencia as any).encargado?.nombre ?? null
+  const encargadoActual = agencia.encargado?.nombre ?? null
 
   useEffect(() => {
     cargarEncargadosDisponibles(agencia.id)
@@ -50,8 +50,8 @@ export function ModalAsignarEncargado({ agencia, onCerrar, cargando }: Props) {
       } else {
         setError('Error al asignar el encargado')
       }
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Error desconocido')
     }
   }
 
@@ -64,8 +64,8 @@ export function ModalAsignarEncargado({ agencia, onCerrar, cargando }: Props) {
       } else {
         setError('Error al quitar el encargado')
       }
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : 'Error desconocido')
     }
   }
 

@@ -300,6 +300,13 @@ export interface RegistrarPagoParams {
   observaciones?: string
 }
 
+export interface Plan {
+  id: string
+  nombre: string
+  precio: number
+  duracion_dias: number
+}
+
 export interface FiltrosConductor {
   estado?: string
   suscripcion?: string
@@ -309,6 +316,7 @@ export const POR_PAGINA = 8
 
 interface ConductoresState {
   conductores: Conductor[]
+  planes: Plan[]
   cargando: boolean
   error: string | null
 
@@ -320,6 +328,7 @@ interface ConductoresState {
 
   // acciones
   cargarConductores: (filtros?: FiltrosConductor, pagina?: number, agenciaId?: string) => Promise<void>
+  cargarPlanes: () => Promise<void>
   cambiarPagina: (pagina: number) => Promise<void>
   crearConductor: (datos: CrearConductorParams) => Promise<boolean>
   actualizarConductor: (conductorId: string, datos: Partial<ConductorRow>) => Promise<boolean>
@@ -331,6 +340,7 @@ interface ConductoresState {
 
 export const useConductoresStore = create<ConductoresState>((set, get) => ({
   conductores: [],
+  planes: [],
   cargando: false,
   error: null,
 
@@ -383,10 +393,25 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
       }))
 
       set({ conductores, totalRegistros: total, totalPaginas })
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
     } finally {
       set({ cargando: false })
+    }
+  },
+
+  cargarPlanes: async () => {
+    try {
+      const { data, error } = await supabase
+        .from('planes_suscripcion')
+        .select('id, nombre, precio, duracion_dias')
+        .eq('activo', true)
+        .order('precio')
+      if (error) throw error
+      set({ planes: (data ?? []) as Plan[] })
+    } catch (e: unknown) {
+      const mensaje = e instanceof Error ? e.message : 'Error al cargar planes'
+      set({ error: mensaje })
     }
   },
 
@@ -418,8 +443,8 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
 
       await get().cargarConductores(get().filtrosActivos, 1)
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     } finally {
       set({ cargando: false })
@@ -436,8 +461,8 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
       if (error) throw error
       await get().cargarConductores(get().filtrosActivos, get().paginaActual)
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     } finally {
       set({ cargando: false })
@@ -454,8 +479,8 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
       if (error) throw error
       await get().cargarConductores(get().filtrosActivos, get().paginaActual)
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     }
   },
@@ -469,8 +494,8 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
       if (error) throw error
       await get().cargarConductores(get().filtrosActivos, get().paginaActual)
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     }
   },
@@ -490,8 +515,8 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
       if (error) throw error
       await get().cargarConductores(get().filtrosActivos, get().paginaActual)
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     } finally {
       set({ cargando: false })

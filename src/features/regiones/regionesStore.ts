@@ -42,8 +42,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
         .order('nombre')
       if (error) throw error
       set({ regionesActivas: data ?? [] })
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
     }
   },
 
@@ -82,8 +82,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
       )
 
       set({ regiones })
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
     } finally {
       set({ cargando: false })
     }
@@ -96,8 +96,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
       if (error) throw error
       await get().cargarRegiones()
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     } finally {
       set({ cargando: false })
@@ -111,8 +111,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
       if (error) throw error
       await get().cargarRegiones()
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     } finally {
       set({ cargando: false })
@@ -133,8 +133,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
         )
       }))
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     }
   },
@@ -148,8 +148,8 @@ export const useRegionesStore = create<RegionesState>((set, get) => ({
       if (error) throw error
       await get().cargarRegiones()
       return true
-    } catch (e: any) {
-      set({ error: e.message })
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : 'Error desconocido' })
       return false
     }
   },

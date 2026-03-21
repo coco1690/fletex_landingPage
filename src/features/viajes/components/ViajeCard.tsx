@@ -37,11 +37,11 @@ export function ViajeCard({
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">
-              {(viaje as any).ruta?.nombre ?? '—'}
+              {viaje.ruta?.nombre ?? '—'}
             </p>
             <p className="text-[10px] text-muted-foreground mt-0.5">
-              {(viaje as any).ruta?.agencia_origen?.nombre} →{' '}
-              {(viaje as any).ruta?.agencia_destino?.nombre}
+              {viaje.ruta?.agencia_origen?.nombre} →{' '}
+              {viaje.ruta?.agencia_destino?.nombre}
             </p>
           </div>
         </div>
@@ -77,13 +77,13 @@ export function ViajeCard({
         <div className="flex items-center gap-1.5">
           <User className="w-3 h-3 text-muted-foreground shrink-0" />
           <span className="text-[10px] text-muted-foreground truncate">
-            {(viaje as any).conductor?.usuario?.nombre ?? '—'}
+            {viaje.conductor?.usuario?.nombre ?? '—'}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
           <Car className="w-3 h-3 text-muted-foreground shrink-0" />
           <span className="text-[10px] font-mono font-bold text-foreground">
-            {(viaje as any).vehiculo?.placa ?? '—'}
+            {viaje.vehiculo?.placa ?? '—'}
           </span>
         </div>
         <div className="flex items-center gap-1.5">

@@ -69,3 +69,15 @@ Five roles defined in `src/lib/constants.ts`: `super_admin`, `admin_regional`, `
 - Spanish naming throughout: `usuario`, `cerrarSesion`, `cargando`, `listo`, etc.
 - Feature stores follow the pattern: state + async actions that call `supabase.from(table)` and update Zustand state
 - Vercel SPA rewrites configured in `vercel.json`
+- **CRÍTICO**: Nunca importar el cliente de Supabase directamente en componentes o páginas. Todas las llamadas a Supabase deben ir a través de los stores de Zustand, sin excepciones. Es una violación arquitectónica grave.
+- **CRÍTICO**: Nunca utilizar el cliente de Supabase dentro de componentes o páginas. El cliente de Supabase solo puede ser usado dentro de los stores de Zustand.
+- **CRÍTICO**: Zustand es el único gestor de estado permitido. Nunca usar useState o useReducer para estado global o datos del servidor.
+- **CRÍTICO**: Siempre utilizar componentes de shadcn/ui para la interfaz. Nunca crear componentes UI personalizados (botones, inputs, modals, selects, etc.) cuando ya existe un componente de shadcn/ui disponible.
+- **CRÍTICO**: Nunca usar el tipo `any` en TypeScript. Siempre usar tipos explícitos o `unknown` si el tipo es verdaderamente desconocido.
+- **CRÍTICO**: Siempre reutilizar los componentes compartidos existentes: TablaPage, PanelDetalle, MenuAcciones, EstadoBadge, Paginacion, TablaVacia. Nunca recrear componentes similares desde cero.
+- Toda paginación debe ser server-side usando `.range()` y `count: 'exact'` de Supabase. Nunca cargar todos los registros de una vez.
+- Los tipos de base de datos vienen de `src/supabase/types.ts`. Siempre usar los tipos generados, nunca redefinir las tablas manualmente.
+- Todos los estados y acciones de los stores deben estar completamente tipados con interfaces explícitas.
+- No dejar `console.log` en código de producción. Solo usar para depuración temporal y eliminar antes de hacer commit.
+- Siempre manejar los tres estados en cada módulo: cargando, error, y vacío.
+- Todo texto visible al usuario y nombres de variables en español. Comentarios en español.

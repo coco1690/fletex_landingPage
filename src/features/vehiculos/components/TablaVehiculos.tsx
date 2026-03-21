@@ -52,7 +52,7 @@ export function TablaVehiculos({
                 <tbody className="divide-y divide-border">
                     {vehiculos.map(vehiculo => {
                         const esSeleccionado = vehiculoDetalle?.id === vehiculo.id
-                        const conductor = (vehiculo as any).conductor?.usuario
+                        const conductor = vehiculo.conductor
 
                         return (
                             <tr
@@ -90,7 +90,7 @@ export function TablaVehiculos({
                                     <div className="flex items-center gap-1.5">
                                         <Building2 className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                                         <span className="text-xs text-muted-foreground">
-                                            {(vehiculo as any).agencia?.nombre ?? '—'}
+                                            {vehiculo.agencia?.nombre ?? '—'}
                                         </span>
                                     </div>
                                 </td>

@@ -65,9 +65,9 @@ export function RutaCard({
                         <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5">
                             <Building2 className="w-3 h-3 shrink-0" />
                             <span className="truncate">
-                                {(ruta as any).agencia_origen?.nombre ?? '—'}
+                                {ruta.agencia_origen?.nombre ?? '—'}
                                 {' → '}
-                                {(ruta as any).agencia_destino?.nombre ?? '—'}
+                                {ruta.agencia_destino?.nombre ?? '—'}
                             </span>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ export function RutaCard({
             <div className="flex items-center gap-4 mt-2 ml-12 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
-                    <span>{(ruta as any).region?.nombre ?? '—'}</span>
+                    <span>{ruta.region?.nombre ?? '—'}</span>
                 </div>
                 <div className="flex items-center gap-1">
                     <DollarSign className="w-3 h-3" />

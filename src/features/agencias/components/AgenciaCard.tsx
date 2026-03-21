@@ -73,7 +73,7 @@ export function AgenciaCard({
       <div className="flex items-center gap-4 mt-2 ml-12 flex-wrap text-xs text-muted-foreground">
         <div className="flex items-center gap-1">
           <MapPin className="w-3 h-3" />
-          <span>{(agencia as any).region?.nombre ?? '—'}</span>
+          <span>{agencia.region?.nombre ?? '—'}</span>
         </div>
         <div className="flex items-center gap-1">
           <Users className="w-3 h-3" />
@@ -89,10 +89,10 @@ export function AgenciaCard({
             <span>{agencia.telefono}</span>
           </div>
         )}
-        {(agencia as any).encargado?.nombre && (
+        {agencia.encargado?.nombre && (
           <div className="flex items-center gap-1">
             <UserCog className="w-3 h-3" />
-            <span>{(agencia as any).encargado.nombre}</span>
+            <span>{agencia.encargado.nombre}</span>
           </div>
         )}
       </div>

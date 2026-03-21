@@ -11,7 +11,7 @@ import {
     DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { useRutasStore, type Ruta } from './rutasStore'
+import { useRutasStore, type Ruta, type DatosRuta } from './rutasStore'
 import { ModalRuta } from './ModalRuta'
 import { PanelDetalle } from '@/components/shared/PanelDetalle'
 import { TablaPage } from '@/components/shared/TablaPage'
@@ -88,8 +88,8 @@ export function RutasPage() {
         const q = busqueda.toLowerCase()
         return (
             r.nombre.toLowerCase().includes(q) ||
-            ((r as any).agencia_origen?.nombre ?? '').toLowerCase().includes(q) ||
-            ((r as any).agencia_destino?.nombre ?? '').toLowerCase().includes(q)
+            (r.agencia_origen?.nombre ?? '').toLowerCase().includes(q) ||
+            (r.agencia_destino?.nombre ?? '').toLowerCase().includes(q)
         )
     })
 
@@ -97,7 +97,7 @@ export function RutasPage() {
     const abrirCrear  = () => { setRutaEditando(null); setModalAbierto(true) }
     const abrirEditar = (ruta: Ruta) => { setRutaEditando(ruta); setModalAbierto(true) }
 
-    const handleGuardar = async (datos: any) =>
+    const handleGuardar = async (datos: DatosRuta) =>
         rutaEditando ? actualizarRuta(rutaEditando.id, datos) : crearRuta(datos)
 
     const handleEliminar = async (ruta: Ruta) => {
@@ -156,7 +156,7 @@ export function RutasPage() {
                     <PanelDetalle
                         titulo="Detalle ruta"
                         nombre={rutaDetalle.nombre}
-                        subtitulo={(rutaDetalle as any).region?.nombre}
+                        subtitulo={rutaDetalle.region?.nombre}
                         badge={<ActivaBadge activa={rutaDetalle.activa} />}
                         icono={<Route className="w-7 h-7 text-primary" />}
                         stats={[
@@ -164,10 +164,10 @@ export function RutasPage() {
                             { valor: formatDuracion(rutaDetalle.duracion_estimada_min), label: 'Duración' },
                         ]}
                         campos={[
-                            { label: 'Origen', valor: (rutaDetalle as any).agencia_origen?.nombre ?? '—' },
-                            { label: 'Destino', valor: (rutaDetalle as any).agencia_destino?.nombre ?? '—' },
+                            { label: 'Origen', valor: rutaDetalle.agencia_origen?.nombre ?? '—' },
+                            { label: 'Destino', valor: rutaDetalle.agencia_destino?.nombre ?? '—' },
                             { label: 'Distancia', valor: rutaDetalle.distancia_km ? `${rutaDetalle.distancia_km} km` : '—' },
-                            { label: 'Región', valor: (rutaDetalle as any).region?.nombre ?? '—' },
+                            { label: 'Región', valor: rutaDetalle.region?.nombre ?? '—' },
                             {
                                 label: 'Creada',
                                 valor: new Date(rutaDetalle.fecha_creacion).toLocaleDateString('es-CO', {
@@ -265,8 +265,8 @@ export function RutasPage() {
                                 <p className="text-[10px] text-muted-foreground mb-0.5">Ruta a eliminar</p>
                                 <p className="text-sm font-semibold text-foreground">{rutaEliminando.nombre}</p>
                                 <p className="text-[10px] text-muted-foreground mt-0.5">
-                                    {(rutaEliminando as any).agencia_origen?.nombre} →{' '}
-                                    {(rutaEliminando as any).agencia_destino?.nombre}
+                                    {rutaEliminando.agencia_origen?.nombre} →{' '}
+                                    {rutaEliminando.agencia_destino?.nombre}
                                 </p>
                             </div>
 

@@ -85,7 +85,7 @@ export function VehiculosPage() {
     const handleSeleccionar = (v: Vehiculo) =>
         setVehiculoDetalle(vehiculoDetalle?.id === v.id ? null : v)
 
-    const handleGuardar = async (datos: any) => {
+    const handleGuardar = async (datos: { placa: string; marca: string; modelo: string; anio: string; tipo: TipoVehiculo; capacidad_pasajeros: string; capacidad_carga_kg: string; agencia_id: string; estado: EstadoVehiculo }) => {
         const payload = {
             ...datos,
             anio: datos.anio ? parseInt(datos.anio) : null,
@@ -163,10 +163,10 @@ export function VehiculosPage() {
                             { label: 'Marca', valor: vehiculoDetalle.marca ?? '—' },
                             { label: 'Modelo', valor: vehiculoDetalle.modelo ?? '—' },
                             { label: 'Año', valor: vehiculoDetalle.anio?.toString() ?? '—' },
-                            { label: 'Agencia', valor: (vehiculoDetalle as any).agencia?.nombre ?? '—' },
+                            { label: 'Agencia', valor: vehiculoDetalle.agencia?.nombre ?? '—' },
                             {
                                 label: 'Conductor',
-                                valor: (vehiculoDetalle as any).conductor?.usuario?.nombre ?? 'Sin asignar',
+                                valor: vehiculoDetalle.conductor?.nombre ?? 'Sin asignar',
                             },
                             {
                                 label: 'Registrado',

@@ -83,7 +83,7 @@ export function Location() {
                 longitude={a.lng}
                 latitude={a.lat}
                 anchor="bottom"
-                onClick={(e: any) => {
+                onClick={(e: { originalEvent: MouseEvent }) => {
                   e.originalEvent.stopPropagation()
                   setPopupIndex(i)
                 }}

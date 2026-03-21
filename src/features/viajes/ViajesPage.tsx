@@ -6,7 +6,7 @@ import {
   Dialog, DialogContent,
   DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog'
-import { useViajesStore, type Viaje } from './viajesStore'
+import { useViajesStore, type Viaje, type DatosViaje } from './viajesStore'
 import { useAuthStore }               from '@/store/authStore'
 import { ModalViaje }                 from './ModalViaje'
 import { ModalCancelarViaje }         from './ModalCancelarViaje'
@@ -48,9 +48,9 @@ export function ViajesPage() {
   const filtrados = viajes.filter(v => {
     const q = busqueda.toLowerCase()
     return (
-      ((v as any).ruta?.nombre ?? '').toLowerCase().includes(q) ||
-      ((v as any).conductor?.usuario?.nombre ?? '').toLowerCase().includes(q) ||
-      ((v as any).vehiculo?.placa ?? '').toLowerCase().includes(q)
+      (v.ruta?.nombre ?? '').toLowerCase().includes(q) ||
+      (v.conductor?.usuario?.nombre ?? '').toLowerCase().includes(q) ||
+      (v.vehiculo?.placa ?? '').toLowerCase().includes(q)
     )
   })
 
@@ -60,7 +60,7 @@ export function ViajesPage() {
   const abrirCrear  = () => { setViajeEditando(null); setModalAbierto(true) }
   const abrirEditar = (v: Viaje) => { setViajeEditando(v); setModalAbierto(true) }
 
-  const handleGuardar = async (datos: any) =>
+  const handleGuardar = async (datos: DatosViaje) =>
     viajeEditando ? actualizarViaje(viajeEditando.id, datos) : crearViaje(datos)
 
   const handleCancelar = async (motivo: string) => {
@@ -123,7 +123,7 @@ export function ViajesPage() {
         panelDetalle={viajeDetalle && (
           <PanelDetalle
             titulo="Detalle viaje"
-            nombre={(viajeDetalle as any).ruta?.nombre ?? '—'}
+            nombre={viajeDetalle.ruta?.nombre ?? '—'}
             subtitulo={new Date(viajeDetalle.hora_salida_programada).toLocaleString('es-CO', {
               weekday: 'short', day: 'numeric', month: 'short',
               hour: '2-digit', minute: '2-digit',
@@ -135,10 +135,10 @@ export function ViajesPage() {
               { valor: `$${viajeDetalle.precio_pasaje.toLocaleString('es-CO')}`, label: 'Precio' },
             ]}
             campos={[
-              { label: 'Conductor',   valor: (viajeDetalle as any).conductor?.usuario?.nombre ?? '—' },
-              { label: 'Vehículo',    valor: (viajeDetalle as any).vehiculo?.placa ?? '—' },
-              { label: 'Origen',      valor: (viajeDetalle as any).ruta?.agencia_origen?.nombre ?? '—' },
-              { label: 'Destino',     valor: (viajeDetalle as any).ruta?.agencia_destino?.nombre ?? '—' },
+              { label: 'Conductor',   valor: viajeDetalle.conductor?.usuario?.nombre ?? '—' },
+              { label: 'Vehículo',    valor: viajeDetalle.vehiculo?.placa ?? '—' },
+              { label: 'Origen',      valor: viajeDetalle.ruta?.agencia_origen?.nombre ?? '—' },
+              { label: 'Destino',     valor: viajeDetalle.ruta?.agencia_destino?.nombre ?? '—' },
               { label: 'Reservados',  valor: `${viajeDetalle.cupos_reservados} cupos` },
               { label: 'Encomiendas', valor: viajeDetalle.acepta_encomiendas ? 'Sí' : 'No' },
               ...(viajeDetalle.observaciones      ? [{ label: 'Observaciones',      valor: viajeDetalle.observaciones }]      : []),
@@ -244,7 +244,7 @@ export function ViajesPage() {
               <div className="bg-secondary/50 rounded-xl p-3">
                 <p className="text-[10px] text-muted-foreground mb-0.5">Viaje a eliminar</p>
                 <p className="text-sm font-semibold text-foreground">
-                  {(viajeEliminando as any).ruta?.nombre ?? '—'}
+                  {viajeEliminando.ruta?.nombre ?? '—'}
                 </p>
                 <p className="text-[10px] text-muted-foreground">
                   {new Date(viajeEliminando.hora_salida_programada).toLocaleString('es-CO', {

@@ -30,7 +30,7 @@ export function ModalAsignarConductor({ vehiculo, onGuardar, onCerrar, cargando 
     const [conductorId, setConductorId] = useState('')
     const [error, setError] = useState('')
 
-    const conductorActual = (vehiculo as any).conductor?.usuario?.nombre ?? null
+    const conductorActual = vehiculo.conductor?.nombre ?? null
 
     useEffect(() => {
         cargarConductoresPorAgencia(vehiculo.agencia_id, vehiculo.id)
@@ -53,8 +53,8 @@ export function ModalAsignarConductor({ vehiculo, onGuardar, onCerrar, cargando 
             } else {
                 setError('Error al asignar el conductor')
             }
-        } catch (e: any) {
-            setError(e.message)
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : 'Error desconocido')
         }
     }
 
@@ -67,8 +67,8 @@ export function ModalAsignarConductor({ vehiculo, onGuardar, onCerrar, cargando 
             } else {
                 setError('Error al quitar el conductor')
             }
-        } catch (e: any) {
-            setError(e.message)
+        } catch (e: unknown) {
+            setError(e instanceof Error ? e.message : 'Error desconocido')
         }
     }
 

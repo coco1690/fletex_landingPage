@@ -330,14 +330,14 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             const conductoresDisponibles: ConductorOpcion[] = (data ?? []).map(c => ({
                 id: c.id,
                 usuario_id: c.usuario_id,
-                nombre: (c.usuario as any)?.nombre ?? '—',
+                nombre: (c.usuario as { nombre: string } | null)?.nombre ?? '—',
                 licencia: c.numero_licencia,
                 tiene_vehiculo: !!c.vehiculo_id && c.vehiculo_id !== vehiculoId,
             }))
 
             set({ conductoresDisponibles })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         } finally {
             set({ cargandoConductores: false })
         }
@@ -388,8 +388,8 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             }))
 
             set({ vehiculos, totalRegistros: total, totalPaginas })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         } finally {
             set({ cargando: false })
         }
@@ -407,8 +407,8 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             if (error) throw error
             await get().cargarVehiculos(get().filtrosActivos, 1)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -422,8 +422,8 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             if (error) throw error
             await get().cargarVehiculos(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -439,8 +439,8 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             if (error) throw error
             await get().cargarVehiculos(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         }
     },
@@ -489,8 +489,8 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
 
             await get().cargarVehiculos(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         }
     },

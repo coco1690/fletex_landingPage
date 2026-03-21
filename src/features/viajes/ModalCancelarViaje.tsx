@@ -48,7 +48,7 @@ export function ModalCancelarViaje({ viaje, onConfirmar, onCerrar, cargando }: P
           <div className="bg-secondary/50 rounded-xl p-3 space-y-1">
             <p className="text-[10px] text-muted-foreground">Viaje a cancelar</p>
             <p className="text-sm font-semibold text-foreground">
-              {(viaje as any).ruta?.nombre ?? '—'}
+              {viaje.ruta?.nombre ?? '—'}
             </p>
             <p className="text-[10px] text-muted-foreground">
               {new Date(viaje.hora_salida_programada).toLocaleString('es-CO', {

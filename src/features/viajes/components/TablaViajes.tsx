@@ -56,11 +56,11 @@ export function TablaViajes({
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-foreground">
-                        {(viaje as any).ruta?.nombre ?? '—'}
+                        {viaje.ruta?.nombre ?? '—'}
                       </p>
                       <p className="text-[10px] text-muted-foreground">
-                        {(viaje as any).ruta?.agencia_origen?.nombre} →{' '}
-                        {(viaje as any).ruta?.agencia_destino?.nombre}
+                        {viaje.ruta?.agencia_origen?.nombre} →{' '}
+                        {viaje.ruta?.agencia_destino?.nombre}
                       </p>
                     </div>
                   </div>
@@ -71,7 +71,7 @@ export function TablaViajes({
                   <div className="flex items-center gap-1.5">
                     <User className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                     <span className="text-xs text-foreground">
-                      {(viaje as any).conductor?.usuario?.nombre ?? '—'}
+                      {viaje.conductor?.usuario?.nombre ?? '—'}
                     </span>
                   </div>
                 </td>
@@ -81,7 +81,7 @@ export function TablaViajes({
                   <div className="flex items-center gap-1.5">
                     <Car className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
                     <span className="text-xs font-mono font-bold text-foreground">
-                      {(viaje as any).vehiculo?.placa ?? '—'}
+                      {viaje.vehiculo?.placa ?? '—'}
                     </span>
                   </div>
                 </td>

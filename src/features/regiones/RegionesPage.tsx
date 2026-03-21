@@ -58,7 +58,7 @@ export function RegionesPage() {
             campos={[
               { label: 'Código',        valor: regionDetalle.codigo },
               { label: 'País',          valor: regionDetalle.pais },
-              { label: 'Admin asignado',valor: (regionDetalle as any).admin?.nombre ?? 'Sin asignar' },
+              { label: 'Admin asignado',valor: regionDetalle.admin?.nombre ?? 'Sin asignar' },
               { label: 'Creado',        valor: new Date(regionDetalle.fecha_creacion).toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }) },
             ]}
             onCerrar={() => setRegionDetalle(null)}
@@ -112,7 +112,7 @@ export function RegionesPage() {
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-1.5">
                         <UserCog className="w-3.5 h-3.5 text-muted-foreground" />
-                        <span className="text-xs text-muted-foreground">{(region as any).admin?.nombre ?? 'Sin asignar'}</span>
+                        <span className="text-xs text-muted-foreground">{region.admin?.nombre ?? 'Sin asignar'}</span>
                       </div>
                     </td>
                     <td className="px-4 py-3">

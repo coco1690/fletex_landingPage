@@ -67,13 +67,13 @@ export function TablaAgencias({
                   <div className="flex items-center gap-1.5">
                     <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">
-                      {(agencia as any).region?.nombre ?? '—'}
+                      {agencia.region?.nombre ?? '—'}
                     </span>
                   </div>
                 </td>
 
                 <td className="px-4 py-3 text-xs text-muted-foreground">
-                  {(agencia as any).encargado?.nombre ?? 'Sin asignar'}
+                  {agencia.encargado?.nombre ?? 'Sin asignar'}
                 </td>
 
                 <td className="px-4 py-3">

@@ -299,8 +299,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
             }))
 
             set({ rutas, totalRegistros: total, totalPaginas })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         } finally {
             set({ cargando: false })
         }
@@ -330,8 +330,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
                 regionesActivas: regiones ?? [],
                 agenciasActivas: agencias ?? [],
             })
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
         }
     },
 
@@ -345,8 +345,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
             if (error) throw error
             await get().cargarRutas(get().filtrosActivos, 1)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -361,8 +361,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
             if (error) throw error
             await get().cargarRutas(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })
@@ -378,8 +378,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
             if (error) throw error
             await get().cargarRutas(get().filtrosActivos, get().paginaActual)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         }
     },
@@ -396,8 +396,8 @@ export const useRutasStore = create<RutasState>((set, get) => ({
                 : paginaActual
             await get().cargarRutas(filtrosActivos, nuevaPagina)
             return true
-        } catch (e: any) {
-            set({ error: e.message })
+        } catch (e: unknown) {
+            set({ error: e instanceof Error ? e.message : 'Error desconocido' })
             return false
         } finally {
             set({ cargando: false })

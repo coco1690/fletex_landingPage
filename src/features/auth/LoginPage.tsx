@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Car, Eye, EyeOff, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/store/authStore'
+import { Logo } from '@/components/Logo'
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -31,13 +32,7 @@ export function LoginPage() {
               onClick={() => navigate('/')}
               className="mb-6 flex items-center gap-2.5 hover:opacity-80 transition-opacity"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-sm">
-                <Car className="h-4 w-4" />
-              </div>
-              <div className="text-left">
-                <p className="text-base font-black tracking-tight text-foreground leading-none">Fletex</p>
-                <p className="text-[10px] text-muted-foreground mt-0.5">Panel de administración</p>
-              </div>
+              <Logo size="lg" />
             </button>
 
             {/* Encabezado */}
@@ -179,7 +174,7 @@ export function LoginPage() {
                   <div className="mb-4 flex items-center justify-between">
                     <div>
                       <p className="text-[10px] text-white/50">Bienvenido</p>
-                      <h3 className="text-sm font-bold text-white">Dashboard Fletex</h3>
+                      <h3 className="text-sm font-bold text-white">Dashboard <span className="font-exo">FLETEX</span></h3>
                     </div>
                     <span className="rounded-lg bg-primary px-2.5 py-1 text-[10px] font-bold text-primary-foreground">
                       Activo

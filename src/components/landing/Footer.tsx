@@ -1,4 +1,4 @@
-import { Bus } from 'lucide-react'
+import { Logo } from '@/components/Logo'
 
 export function Footer() {
   return (
@@ -6,11 +6,8 @@ export function Footer() {
       <div className="max-w-4xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 bg-primary rounded flex items-center justify-center">
-                <Bus className="w-3.5 h-3.5 text-primary-foreground" />
-              </div>
-              <span className="font-bold text-sm">Fletex</span>
+            <div className="mb-3">
+              <Logo size="sm" />
             </div>
             <p className="text-xs text-muted-foreground leading-relaxed">
               Transporte inteligente en los llanos colombianos.

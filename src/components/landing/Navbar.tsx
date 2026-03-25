@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Car, Sun, Moon, Menu, X } from 'lucide-react'
+import { Sun, Moon, Menu, X } from 'lucide-react'
 import { useThemeStore } from '@/store/themeStore'
+import { Logo } from '@/components/Logo'
 
 
 const NAV_LINKS = [
@@ -36,10 +37,7 @@ export function Navbar() {
 
         {/* Logo */}
         <button onClick={() => navigate('/')} className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <Car className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span className="font-bold text-lg tracking-tight">Fletex</span>
+          <Logo size="lg" />
         </button>
 
         {/* Desktop */}

@@ -26,7 +26,7 @@ export function TablaViajes({
       <table className="w-full">
         <thead className="sticky top-0 z-10 bg-card">
           <tr className="border-b border-border">
-            {['Ruta', 'Conductor', 'Vehículo', 'Salida', 'Cupos', 'Precio', 'Estado', ''].map(h => (
+            {['ID', 'Ruta', 'Conductor', 'Vehículo', 'Salida', 'Cupos', 'Precio', 'Estado', ''].map(h => (
               <th
                 key={h}
                 className="text-left text-[10px] font-bold uppercase tracking-wider text-muted-foreground px-4 py-3 first:pl-5 last:pr-5"
@@ -48,8 +48,15 @@ export function TablaViajes({
                   esSeleccionado && 'bg-primary/5 border-l-2 border-l-primary'
                 )}
               >
-                {/* Ruta */}
+                {/* ID */}
                 <td className="px-4 py-3 pl-5">
+                  <span className="text-[10px] font-mono text-muted-foreground">
+                    {viaje.id.slice(0, 8)}
+                  </span>
+                </td>
+
+                {/* Ruta */}
+                <td className="px-4 py-3">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center shrink-0">
                       <Route className="w-4 h-4 text-primary" />

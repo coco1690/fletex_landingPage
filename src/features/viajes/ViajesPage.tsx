@@ -6,7 +6,7 @@ import {
   Dialog, DialogContent,
   DialogHeader, DialogTitle, DialogDescription,
 } from '@/components/ui/dialog'
-import { useViajesStore, type Viaje, type DatosViaje } from './viajesStore'
+import { useViajesStore, type Viaje, type DatosViaje, POR_PAGINA } from './viajesStore'
 import { useAuthStore }               from '@/store/authStore'
 import { ModalViaje }                 from './ModalViaje'
 import { ModalCancelarViaje }         from './ModalCancelarViaje'
@@ -120,6 +120,18 @@ export function ViajesPage() {
           paginaActual
         )}
         onCrear={abrirCrear}
+        paginacion={
+          totalPaginas > 1 ? (
+            <Paginacion
+              paginaActual={paginaActual}
+              totalPaginas={totalPaginas}
+              totalRegistros={totalRegistros}
+              porPagina={POR_PAGINA}
+              onCambiar={cambiarPagina}
+              cargando={cargando}
+            />
+          ) : undefined
+        }
         panelDetalle={viajeDetalle && (
           <PanelDetalle
             titulo="Detalle viaje"
@@ -193,16 +205,6 @@ export function ViajesPage() {
               />
             </div>
           </>
-        )}
-        {totalPaginas > 1 && (
-          <Paginacion
-            paginaActual={paginaActual}
-            totalPaginas={totalPaginas}
-            totalRegistros={totalRegistros}
-            porPagina={8}
-            onCambiar={cambiarPagina}
-            cargando={cargando}
-          />
         )}
       </TablaPage>
 

@@ -123,3 +123,4 @@ Five roles defined in `src/lib/constants.ts` (`ROLES` constant): `super_admin`, 
 - No dejar `console.log` en código de producción. Solo usar para depuración temporal y eliminar antes de hacer commit.
 - Siempre manejar los tres estados en cada módulo: cargando, error, y vacío.
 - Todo texto visible al usuario y nombres de variables en español. Comentarios en español.
+- Siempre responder en español en todas las conversaciones.

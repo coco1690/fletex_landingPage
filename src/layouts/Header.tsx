@@ -1,6 +1,7 @@
 import { Menu, Bell, Sun, Moon } from 'lucide-react'
 import { useThemeStore } from '@/store/themeStore'
 import { useAuthStore } from '@/store/authStore'
+import { Logo } from '@/components/Logo'
 
 interface HeaderProps {
   onAbrirSidebar: () => void
@@ -31,13 +32,16 @@ export function Header({ onAbrirSidebar }: HeaderProps) {
 
       {/* Izquierda */}
       <div className="flex items-center gap-3">
-        {/* Hamburguesa — solo mobile */}
+        {/* Hamburguesa + Logo — solo mobile */}
         <button
           onClick={onAbrirSidebar}
           className="md:hidden w-8 h-8 flex items-center justify-center rounded-lg hover:bg-secondary transition-colors"
         >
           <Menu className="w-4 h-4 text-foreground" />
         </button>
+        <div className="md:hidden">
+          <Logo size="sm" showText={false} />
+        </div>
 
         <div>
           <h1 className="text-base font-black tracking-tight text-foreground">{titulo}</h1>

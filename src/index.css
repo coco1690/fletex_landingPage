@@ -31,6 +31,8 @@
   --color-info-light: #E0F2FE;
 
   --radius: 0.625rem;
+
+  --font-exo: 'Exo 2', sans-serif;
 }
 
 .dark {
@@ -207,6 +209,12 @@ html.dark {
 
   .bg-destructive\/10 {
     background-color: color-mix(in srgb, var(--color-destructive) 10%, transparent);
+  }
+
+  .font-exo {
+    font-family: var(--font-exo);
+    font-style: italic;
+    font-weight: 800;
   }
 
   @keyframes radar {

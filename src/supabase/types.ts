@@ -906,8 +906,11 @@ export type Database = {
           created_at: string
           estado: string
           id: string
+          latitud: number | null
+          longitud: number | null
           nombres: string
           orden: number
+          punto_abordaje_id: string | null
           reserva_id: string
           telefono: string | null
           updated_at: string
@@ -916,8 +919,11 @@ export type Database = {
           created_at?: string
           estado?: string
           id?: string
+          latitud?: number | null
+          longitud?: number | null
           nombres: string
           orden?: number
+          punto_abordaje_id?: string | null
           reserva_id: string
           telefono?: string | null
           updated_at?: string
@@ -926,13 +932,23 @@ export type Database = {
           created_at?: string
           estado?: string
           id?: string
+          latitud?: number | null
+          longitud?: number | null
           nombres?: string
           orden?: number
+          punto_abordaje_id?: string | null
           reserva_id?: string
           telefono?: string | null
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "reserva_pasajeros_punto_abordaje_id_fkey"
+            columns: ["punto_abordaje_id"]
+            isOneToOne: false
+            referencedRelation: "puntos_abordaje"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "reserva_pasajeros_reserva_id_fkey"
             columns: ["reserva_id"]
@@ -1384,6 +1400,8 @@ export type Database = {
           cupos_confirmados: number
           cupos_reservados: number
           cupos_totales: number
+          distancia_total_metros: number | null
+          duracion_total_segundos: number | null
           estado: Database["public"]["Enums"]["estado_viaje"]
           fecha_creacion: string
           hora_llegada_estimada: string | null
@@ -1397,6 +1415,8 @@ export type Database = {
           precio_pasaje: number
           punto_abordaje_id: string | null
           ruta_id: string
+          ruta_optimizada_json: Json | null
+          ultima_optimizacion: string | null
           updated_at: string
           url_planilla: string | null
           vehiculo_id: string
@@ -1409,6 +1429,8 @@ export type Database = {
           cupos_confirmados?: number
           cupos_reservados?: number
           cupos_totales: number
+          distancia_total_metros?: number | null
+          duracion_total_segundos?: number | null
           estado?: Database["public"]["Enums"]["estado_viaje"]
           fecha_creacion?: string
           hora_llegada_estimada?: string | null
@@ -1422,6 +1444,8 @@ export type Database = {
           precio_pasaje: number
           punto_abordaje_id?: string | null
           ruta_id: string
+          ruta_optimizada_json?: Json | null
+          ultima_optimizacion?: string | null
           updated_at?: string
           url_planilla?: string | null
           vehiculo_id: string
@@ -1434,6 +1458,8 @@ export type Database = {
           cupos_confirmados?: number
           cupos_reservados?: number
           cupos_totales?: number
+          distancia_total_metros?: number | null
+          duracion_total_segundos?: number | null
           estado?: Database["public"]["Enums"]["estado_viaje"]
           fecha_creacion?: string
           hora_llegada_estimada?: string | null
@@ -1447,6 +1473,8 @@ export type Database = {
           precio_pasaje?: number
           punto_abordaje_id?: string | null
           ruta_id?: string
+          ruta_optimizada_json?: Json | null
+          ultima_optimizacion?: string | null
           updated_at?: string
           url_planilla?: string | null
           vehiculo_id?: string
@@ -1952,6 +1980,8 @@ export type Database = {
           cupos_confirmados: number
           cupos_reservados: number
           cupos_totales: number
+          distancia_total_metros: number | null
+          duracion_total_segundos: number | null
           estado: Database["public"]["Enums"]["estado_viaje"]
           fecha_creacion: string
           hora_llegada_estimada: string | null
@@ -1965,6 +1995,8 @@ export type Database = {
           precio_pasaje: number
           punto_abordaje_id: string | null
           ruta_id: string
+          ruta_optimizada_json: Json | null
+          ultima_optimizacion: string | null
           updated_at: string
           url_planilla: string | null
           vehiculo_id: string
@@ -2051,6 +2083,7 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      get_dashboard_data: { Args: never; Returns: Json }
       iniciar_viaje: {
         Args: { p_conductor_id: string; p_viaje_id: string }
         Returns: {
@@ -2061,6 +2094,8 @@ export type Database = {
           cupos_confirmados: number
           cupos_reservados: number
           cupos_totales: number
+          distancia_total_metros: number | null
+          duracion_total_segundos: number | null
           estado: Database["public"]["Enums"]["estado_viaje"]
           fecha_creacion: string
           hora_llegada_estimada: string | null
@@ -2074,6 +2109,8 @@ export type Database = {
           precio_pasaje: number
           punto_abordaje_id: string | null
           ruta_id: string
+          ruta_optimizada_json: Json | null
+          ultima_optimizacion: string | null
           updated_at: string
           url_planilla: string | null
           vehiculo_id: string
@@ -2126,8 +2163,11 @@ export type Database = {
           created_at: string
           estado: string
           id: string
+          latitud: number | null
+          longitud: number | null
           nombres: string
           orden: number
+          punto_abordaje_id: string | null
           reserva_id: string
           telefono: string | null
           updated_at: string

@@ -2,8 +2,9 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, MapPin, Building2, Users, Truck,
   Route, Car, BookOpen, Wallet, BarChart3,
-  UserCog, Bus, X, LogOut,
+  UserCog, X, LogOut,
 } from 'lucide-react'
+import { Logo } from '@/components/Logo'
 import { useAuthStore } from '@/store/authStore'
 import { usePermisos } from '@/hooks/usePermisos'
 import { ROLES } from '@/lib/constants'
@@ -89,12 +90,7 @@ export function Sidebar({ onCerrar }: SidebarProps) {
 
       {/* Header sidebar */}
       <div className="flex items-center justify-between px-4 h-14 border-b border-border shrink-0">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-primary rounded-lg flex items-center justify-center">
-            <Bus className="w-4 h-4 text-primary-foreground" />
-          </div>
-          <span className="font-black text-base tracking-tight">Fletex</span>
-        </div>
+        <Logo size="md" />
         {onCerrar && (
           <button
             onClick={onCerrar}

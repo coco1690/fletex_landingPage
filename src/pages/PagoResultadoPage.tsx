@@ -3,19 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { CheckCircle, XCircle, Clock, Loader2, ArrowRight, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { usePagoResultadoStore } from '@/store/usePagoResultadoStore'
-
-function Logo() {
-  return (
-    <div className="flex items-center gap-2 mb-8">
-      <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-        <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4 text-primary-foreground" stroke="currentColor" strokeWidth={2}>
-          <path d="M9 17H3v-2l2-6h10l2 6v2h-6m0 0a2 2 0 11-4 0m4 0a2 2 0 01-4 0" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </div>
-      <span className="font-bold text-lg tracking-tight text-foreground">Fletex</span>
-    </div>
-  )
-}
+import { Logo } from '@/components/Logo'
 
 export function PagoResultadoPage() {
   const [searchParams] = useSearchParams()
@@ -33,7 +21,9 @@ export function PagoResultadoPage() {
   if (estado === 'verificando') {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-        <Logo />
+        <div className="mb-8">
+          <Logo size="lg" />
+        </div>
         <div className="w-full max-w-sm">
           <div className="bg-card border border-border rounded-2xl p-8 flex flex-col items-center gap-6 shadow-sm">
             <div className="relative">
@@ -59,7 +49,9 @@ export function PagoResultadoPage() {
   if (estado === 'pagado') {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-        <Logo />
+        <div className="mb-8">
+          <Logo size="lg" />
+        </div>
         <div className="w-full max-w-sm">
           <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
             {/* Header verde */}
@@ -116,7 +108,9 @@ export function PagoResultadoPage() {
   if (estado === 'fallido') {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-        <Logo />
+        <div className="mb-8">
+          <Logo size="lg" />
+        </div>
         <div className="w-full max-w-sm">
           <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
             <div className="bg-error/10 border-b border-error/20 px-8 pt-8 pb-6 flex flex-col items-center gap-4">
@@ -165,7 +159,9 @@ export function PagoResultadoPage() {
   if (estado === 'expirado') {
     return (
       <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-        <Logo />
+        <div className="mb-8">
+          <Logo size="lg" />
+        </div>
         <div className="w-full max-w-sm">
           <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
             <div className="bg-warning/10 border-b border-warning/20 px-8 pt-8 pb-6 flex flex-col items-center gap-4">
@@ -205,7 +201,9 @@ export function PagoResultadoPage() {
   // Estado pendiente
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
-      <Logo />
+      <div className="mb-8">
+        <Logo size="lg" />
+      </div>
       <div className="w-full max-w-sm">
         <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
           <div className="bg-info/10 border-b border-info/20 px-8 pt-8 pb-6 flex flex-col items-center gap-4">

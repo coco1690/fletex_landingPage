@@ -9,6 +9,7 @@ const CONFIG: Record<RolUsuario, { label: string; cls: string }> = {
   admin_regional:   { label: 'Admin Regional',   cls: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
   encargado_agencia:{ label: 'Encargado',         cls: 'bg-cyan-500/10 text-cyan-500 border-cyan-500/20' },
   conductor:        { label: 'Conductor',         cls: 'bg-amber-500/10 text-amber-500 border-amber-500/20' },
+  moto_taxi:        { label: 'Moto Taxi',        cls: 'bg-orange-500/10 text-orange-500 border-orange-500/20' },
   pasajero:         { label: 'Pasajero',          cls: 'bg-secondary text-muted-foreground border-border' },
 }
 

@@ -8,22 +8,22 @@ interface FiltroEstado { valor: string; label: string }
 interface Props {
   titulo:         string
   subtitulo:      string
-  labelBoton:     string
+  labelBoton?:    string
   placeholder:    string
   busqueda:       string
   onBusqueda:     (v: string) => void
-  filtroEstado:   string
-  onFiltroEstado: (v: string) => void
+  filtroEstado?:  string
+  onFiltroEstado?: (v: string) => void
   filtrosEstado?: FiltroEstado[]
   filtroExtra?:   React.ReactNode
   cargando:       boolean
   error:          string | null
   onLimpiarError: () => void
   onRefresh:      () => void
-  onCrear:        () => void
+  onCrear?:       () => void
   children:       React.ReactNode
   panelDetalle?:  React.ReactNode
-  paginacion?:    React.ReactNode  // ← nuevo
+  paginacion?:    React.ReactNode
 }
 
 export function TablaPage({
@@ -65,11 +65,13 @@ export function TablaPage({
             >
               <RefreshCw className={cn('w-4 h-4', cargando && 'animate-spin')} />
             </Button>
-            <Button onClick={onCrear} size="sm" className="gap-1.5 h-8 md:h-9 px-3 md:px-4">
-              <Plus className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{labelBoton}</span>
-              <span className="sm:hidden">Nuevo</span>
-            </Button>
+            {onCrear && (
+              <Button onClick={onCrear} size="sm" className="gap-1.5 h-8 md:h-9 px-3 md:px-4">
+                <Plus className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{labelBoton ?? 'Nuevo'}</span>
+                <span className="sm:hidden">Nuevo</span>
+              </Button>
+            )}
           </div>
         </div>
 
@@ -108,24 +110,26 @@ export function TablaPage({
           </div>
 
           {/* Fila 2: toggle estado — scroll horizontal en móvil */}
-          <div className="overflow-x-auto pb-0.5 -mx-0.5 px-0.5">
-            <div className="flex items-center gap-1 bg-secondary rounded-xl p-1 w-fit">
-              {filtrosEstado.map(f => (
-                <button
-                  key={f.valor}
-                  onClick={() => onFiltroEstado(f.valor)}
-                  className={cn(
-                    'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap',
-                    filtroEstado === f.valor
-                      ? 'bg-card text-foreground shadow-sm'
-                      : 'text-muted-foreground hover:text-foreground'
-                  )}
-                >
-                  {f.label}
-                </button>
-              ))}
+          {filtroEstado && onFiltroEstado && (
+            <div className="overflow-x-auto pb-0.5 -mx-0.5 px-0.5">
+              <div className="flex items-center gap-1 bg-secondary rounded-xl p-1 w-fit">
+                {filtrosEstado.map(f => (
+                  <button
+                    key={f.valor}
+                    onClick={() => onFiltroEstado(f.valor)}
+                    className={cn(
+                      'px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap',
+                      filtroEstado === f.valor
+                        ? 'bg-card text-foreground shadow-sm'
+                        : 'text-muted-foreground hover:text-foreground'
+                    )}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
         </div>
 

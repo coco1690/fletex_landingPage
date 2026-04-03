@@ -1,5 +1,6 @@
 import type { Database } from '../supabase/types'
 
+// ── Row types ──────────────────────────────────────────
 export type UsuarioRow = Database['public']['Tables']['usuarios']['Row']
 export type ConductorRow = Database['public']['Tables']['conductores']['Row']
 export type AgenciaRow = Database['public']['Tables']['agencias']['Row']
@@ -10,6 +11,24 @@ export type ViajeRow = Database['public']['Tables']['viajes']['Row']
 export type ReservaRow = Database['public']['Tables']['reservas']['Row']
 export type LiquidacionRow = Database['public']['Tables']['liquidaciones']['Row']
 export type NotificacionRow = Database['public']['Tables']['notificaciones']['Row']
+export type CarreraRow = Database['public']['Tables']['carreras']['Row']
+export type EncomiendaRow = Database['public']['Tables']['encomiendas']['Row']
+export type EventoEncomiendaRow = Database['public']['Tables']['eventos_encomienda']['Row']
+export type PlanillaRow = Database['public']['Tables']['planillas']['Row']
+export type PlanSuscripcionRow = Database['public']['Tables']['planes_suscripcion']['Row']
+export type SuscripcionConductorRow = Database['public']['Tables']['suscripciones_conductor']['Row']
+export type ConfiguracionComisionRow = Database['public']['Tables']['configuracion_comisiones']['Row']
+export type PuntoAbordajeRow = Database['public']['Tables']['puntos_abordaje']['Row']
+
+// ── Enum types ─────────────────────────────────────────
 export type RolUsuario = Database['public']['Enums']['rol_usuario']
 export type EstadoSuscripcion = Database['public']['Enums']['estado_suscripcion']
 export type EstadoViaje = Database['public']['Enums']['estado_viaje']
+export type EstadoCarrera = Database['public']['Enums']['estado_carrera']
+export type EstadoEncomienda = Database['public']['Enums']['estado_encomienda']
+export type EstadoPlanilla = Database['public']['Enums']['estado_planilla']
+export type EstadoSuscripcionHistorica = Database['public']['Enums']['estado_suscripcion_historica']
+export type TipoCobroEncomienda = Database['public']['Enums']['tipo_cobro_encomienda']
+export type TipoServicioComision = Database['public']['Enums']['tipo_servicio_comision']
+export type CanalNotificacion = Database['public']['Enums']['canal_notificacion']
+export type TipoNotificacion = Database['public']['Enums']['tipo_notificacion']

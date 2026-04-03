@@ -381,11 +381,20 @@ export const useVehiculosStore = create<VehiculosState>((set, get) => ({
             const total = count ?? 0
             const totalPaginas = Math.ceil(total / POR_PAGINA)
 
-            const vehiculos = (data ?? []).map(v => ({
-                ...v,
-                agencia: Array.isArray(v.agencia) ? v.agencia[0] ?? null : v.agencia,
-                conductor: Array.isArray(v.conductor) ? v.conductor[0] ?? null : v.conductor,
-            }))
+            const vehiculos = (data ?? []).map(v => {
+                const agencia = Array.isArray(v.agencia) ? v.agencia[0] ?? null : v.agencia
+                const conductorRaw = Array.isArray(v.conductor) ? v.conductor[0] ?? null : v.conductor
+                const usuarioRaw = conductorRaw
+                    ? (Array.isArray(conductorRaw.usuario) ? conductorRaw.usuario[0] ?? null : conductorRaw.usuario)
+                    : null
+                return {
+                    ...v,
+                    agencia,
+                    conductor: usuarioRaw
+                        ? { nombre: usuarioRaw.nombre, telefono: usuarioRaw.telefono }
+                        : null,
+                }
+            })
 
             set({ vehiculos, totalRegistros: total, totalPaginas })
         } catch (e: unknown) {

@@ -98,6 +98,82 @@ export type Database = {
           },
         ]
       }
+      carreras: {
+        Row: {
+          agencia_id: string | null
+          codigo_confirmacion: string | null
+          conductor_id: string | null
+          direccion_destino: string | null
+          direccion_recogida: string
+          estado: Database["public"]["Enums"]["estado_carrera"]
+          fecha_aceptacion: string | null
+          fecha_fin: string | null
+          fecha_solicitud: string | null
+          id: string
+          latitud_recogida: number | null
+          longitud_recogida: number | null
+          pasajero_nombre: string
+          pasajero_telefono: string
+          updated_at: string | null
+        }
+        Insert: {
+          agencia_id?: string | null
+          codigo_confirmacion?: string | null
+          conductor_id?: string | null
+          direccion_destino?: string | null
+          direccion_recogida: string
+          estado?: Database["public"]["Enums"]["estado_carrera"]
+          fecha_aceptacion?: string | null
+          fecha_fin?: string | null
+          fecha_solicitud?: string | null
+          id?: string
+          latitud_recogida?: number | null
+          longitud_recogida?: number | null
+          pasajero_nombre: string
+          pasajero_telefono: string
+          updated_at?: string | null
+        }
+        Update: {
+          agencia_id?: string | null
+          codigo_confirmacion?: string | null
+          conductor_id?: string | null
+          direccion_destino?: string | null
+          direccion_recogida?: string
+          estado?: Database["public"]["Enums"]["estado_carrera"]
+          fecha_aceptacion?: string | null
+          fecha_fin?: string | null
+          fecha_solicitud?: string | null
+          id?: string
+          latitud_recogida?: number | null
+          longitud_recogida?: number | null
+          pasajero_nombre?: string
+          pasajero_telefono?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "carreras_agencia_id_fkey"
+            columns: ["agencia_id"]
+            isOneToOne: false
+            referencedRelation: "agencias"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carreras_conductor_id_fkey"
+            columns: ["conductor_id"]
+            isOneToOne: false
+            referencedRelation: "conductores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "carreras_conductor_id_fkey"
+            columns: ["conductor_id"]
+            isOneToOne: false
+            referencedRelation: "perfil_conductor"
+            referencedColumns: ["conductor_id"]
+          },
+        ]
+      }
       conductores: {
         Row: {
           agencia_id: string
@@ -1258,6 +1334,45 @@ export type Database = {
           },
         ]
       }
+      ubicaciones_conductor: {
+        Row: {
+          conductor_id: string
+          disponible: boolean | null
+          latitud: number
+          longitud: number
+          updated_at: string | null
+        }
+        Insert: {
+          conductor_id: string
+          disponible?: boolean | null
+          latitud: number
+          longitud: number
+          updated_at?: string | null
+        }
+        Update: {
+          conductor_id?: string
+          disponible?: boolean | null
+          latitud?: number
+          longitud?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ubicaciones_conductor_conductor_id_fkey"
+            columns: ["conductor_id"]
+            isOneToOne: true
+            referencedRelation: "conductores"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ubicaciones_conductor_conductor_id_fkey"
+            columns: ["conductor_id"]
+            isOneToOne: true
+            referencedRelation: "perfil_conductor"
+            referencedColumns: ["conductor_id"]
+          },
+        ]
+      }
       usuarios: {
         Row: {
           agencia_id: string | null
@@ -2321,6 +2436,12 @@ export type Database = {
     }
     Enums: {
       canal_notificacion: "push" | "in_app" | "ambos"
+      estado_carrera:
+        | "pendiente"
+        | "aceptada"
+        | "en_curso"
+        | "completada"
+        | "cancelada"
       estado_encomienda:
         | "registrada"
         | "en_transito"
@@ -2351,6 +2472,7 @@ export type Database = {
         | "encargado_agencia"
         | "conductor"
         | "pasajero"
+        | "moto_taxi"
       tipo_cobro_encomienda: "prepago" | "contraentrega"
       tipo_notificacion:
         | "vencimiento_suscripcion"
@@ -2497,6 +2619,13 @@ export const Constants = {
   public: {
     Enums: {
       canal_notificacion: ["push", "in_app", "ambos"],
+      estado_carrera: [
+        "pendiente",
+        "aceptada",
+        "en_curso",
+        "completada",
+        "cancelada",
+      ],
       estado_encomienda: [
         "registrada",
         "en_transito",
@@ -2530,6 +2659,7 @@ export const Constants = {
         "encargado_agencia",
         "conductor",
         "pasajero",
+        "moto_taxi",
       ],
       tipo_cobro_encomienda: ["prepago", "contraentrega"],
       tipo_notificacion: [

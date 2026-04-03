@@ -16,7 +16,7 @@ interface Props {
   stats?:       StatInfo[]
   campos:       CampoInfo[]
   onCerrar:     () => void
-  onEditar:     () => void
+  onEditar?:    () => void
   labelEditar?: string
 }
 
@@ -112,12 +112,14 @@ export function PanelDetalle({
           </div>
 
           {/* Footer */}
-          <div className="px-5 py-4 border-t border-border shrink-0 pb-safe">
-            <Button onClick={onEditar} className="w-full gap-2">
-              <Pencil className="w-3.5 h-3.5" />
-              {labelEditar}
-            </Button>
-          </div>
+          {onEditar && (
+            <div className="px-5 py-4 border-t border-border shrink-0 pb-safe">
+              <Button onClick={onEditar} className="w-full gap-2">
+                <Pencil className="w-3.5 h-3.5" />
+                {labelEditar}
+              </Button>
+            </div>
+          )}
 
         </div>
       </div>
@@ -141,12 +143,14 @@ export function PanelDetalle({
         </ScrollArea>
 
         {/* Footer */}
-        <div className="px-5 py-4 border-t border-border">
-          <Button onClick={onEditar} className="w-full gap-2">
-            <Pencil className="w-3.5 h-3.5" />
-            {labelEditar}
-          </Button>
-        </div>
+        {onEditar && (
+          <div className="px-5 py-4 border-t border-border">
+            <Button onClick={onEditar} className="w-full gap-2">
+              <Pencil className="w-3.5 h-3.5" />
+              {labelEditar}
+            </Button>
+          </div>
+        )}
 
       </div>
     </>

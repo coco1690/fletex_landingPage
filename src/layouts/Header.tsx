@@ -1,4 +1,5 @@
 import { Menu, Bell, Sun, Moon } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { useThemeStore } from '@/store/themeStore'
 import { useAuthStore } from '@/store/authStore'
 import { Logo } from '@/components/Logo'
@@ -10,9 +11,10 @@ interface HeaderProps {
 export function Header({ onAbrirSidebar }: HeaderProps) {
   const { tema, toggle } = useThemeStore()
   const { usuario } = useAuthStore()
+  const location = useLocation()
 
   // título dinámico según la ruta
-  const path = window.location.pathname
+  const path = location.pathname
   const titulo = {
     '/dashboard/inicio':        'Inicio',
     '/dashboard/regiones':      'Regiones',
@@ -23,6 +25,11 @@ export function Header({ onAbrirSidebar }: HeaderProps) {
     '/dashboard/viajes':        'Viajes',
     '/dashboard/reservas':      'Reservas',
     '/dashboard/liquidaciones': 'Liquidaciones',
+    '/dashboard/carreras':      'Carreras',
+    '/dashboard/encomiendas':   'Encomiendas',
+    '/dashboard/planillas':     'Planillas',
+    '/dashboard/suscripciones': 'Planes',
+    '/dashboard/comisiones':    'Comisiones',
     '/dashboard/reportes':      'Reportes',
     '/dashboard/usuarios':      'Usuarios',
   }[path] ?? 'Dashboard'

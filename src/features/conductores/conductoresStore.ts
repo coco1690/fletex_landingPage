@@ -264,12 +264,15 @@ import type { Database } from '@/supabase/types'
 type ConductorRow = Database['public']['Tables']['conductores']['Row']
 type EstadoGeneral = Database['public']['Enums']['estado_general']
 
+type RolUsuario = Database['public']['Enums']['rol_usuario']
+
 export type Conductor = ConductorRow & {
   usuario?: {
     nombre: string
     telefono: string | null
     email: string | null
     estado: EstadoGeneral
+    rol: RolUsuario
   } | null
   agencia?: { nombre: string; codigo: string; region_id: string } | null
   vehiculo?: {
@@ -360,7 +363,7 @@ export const useConductoresStore = create<ConductoresState>((set, get) => ({
         .from('conductores')
         .select(`
           *,
-          usuario:usuario_id ( nombre, telefono, email, estado ),
+          usuario:usuario_id ( nombre, telefono, email, estado, rol ),
           agencia:agencia_id ( nombre, codigo, region_id ),
           vehiculo:vehiculo_id ( placa, marca, modelo, tipo )
         `, { count: 'exact' })

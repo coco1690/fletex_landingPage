@@ -98,8 +98,8 @@ export function ModalUsuario({ usuario, onGuardar, onActualizar, onCerrar, carga
   }
 
   // roles que necesitan región/agencia
-  const necesitaRegion  = ['admin_regional', 'encargado_agencia', 'conductor'].includes(rol)
-  const necesitaAgencia = ['encargado_agencia', 'conductor'].includes(rol)
+  const necesitaRegion  = ['admin_regional', 'encargado_agencia', 'conductor', 'moto_taxi'].includes(rol)
+  const necesitaAgencia = ['encargado_agencia', 'conductor', 'moto_taxi'].includes(rol)
 
   return (
     <Dialog open onOpenChange={onCerrar}>
@@ -186,6 +186,7 @@ export function ModalUsuario({ usuario, onGuardar, onActualizar, onCerrar, carga
                   <SelectItem value="admin_regional">Admin Regional</SelectItem>
                   <SelectItem value="encargado_agencia">Encargado de Agencia</SelectItem>
                   <SelectItem value="conductor">Conductor</SelectItem>
+                  <SelectItem value="moto_taxi">Moto Taxi</SelectItem>
                   <SelectItem value="pasajero">Pasajero</SelectItem>
                 </SelectContent>
               </Select>

@@ -11,6 +11,11 @@ type Modulo =
   | 'viajes'
   | 'reservas'
   | 'liquidaciones'
+  | 'carreras'
+  | 'encomiendas'
+  | 'planillas'
+  | 'suscripciones'
+  | 'comisiones'
   | 'reportes'
   | 'usuarios'
 
@@ -31,33 +36,48 @@ const MATRIZ: Record<string, Record<Modulo, Partial<Permisos>>> = {
     rutas:         { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     viajes:        { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     reservas:      { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
-    liquidaciones: { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
-    reportes:      { puedeVer: true, esGlobal: true },
-    usuarios:      { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    liquidaciones:  { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    carreras:       { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    encomiendas:    { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    planillas:      { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    suscripciones:  { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    comisiones:     { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    reportes:       { puedeVer: true, esGlobal: true },
+    usuarios:       { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
   },
   [ROLES.ADMIN_REGIONAL]: {
-    regiones:      { puedeVer: true },
-    agencias:      { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    conductores:   { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    vehiculos:     { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    rutas:         { puedeVer: true },
-    viajes:        { puedeVer: true },
-    reservas:      { puedeVer: true },
-    liquidaciones: { puedeVer: true },
-    reportes:      { puedeVer: true },
-    usuarios:      { puedeVer: true },
+    regiones:       { puedeVer: true },
+    agencias:       { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    conductores:    { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    vehiculos:      { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    rutas:          { puedeVer: true },
+    viajes:         { puedeVer: true },
+    reservas:       { puedeVer: true },
+    liquidaciones:  { puedeVer: true },
+    carreras:       { puedeVer: true },
+    encomiendas:    { puedeVer: true },
+    planillas:      { puedeVer: true },
+    suscripciones:  { puedeVer: true },
+    comisiones:     { puedeVer: true },
+    reportes:       { puedeVer: true },
+    usuarios:       { puedeVer: true },
   },
   [ROLES.ENCARGADO_AGENCIA]: {
-    regiones:      {},
-    agencias:      { puedeVer: true },
-    conductores:   { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    vehiculos:     { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    rutas:         { puedeVer: true },
-    viajes:        { puedeVer: true, puedeCrear: true },
-    reservas:      { puedeVer: true, puedeCrear: true, puedeEditar: true },
-    liquidaciones: { puedeVer: true, puedeCrear: true },
-    reportes:      { puedeVer: true },
-    usuarios:      { puedeVer: true },
+    regiones:       {},
+    agencias:       { puedeVer: true },
+    conductores:    { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    vehiculos:      { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    rutas:          { puedeVer: true },
+    viajes:         { puedeVer: true, puedeCrear: true },
+    reservas:       { puedeVer: true, puedeCrear: true, puedeEditar: true },
+    liquidaciones:  { puedeVer: true, puedeCrear: true },
+    carreras:       { puedeVer: true },
+    encomiendas:    { puedeVer: true, puedeCrear: true },
+    planillas:      { puedeVer: true },
+    suscripciones:  { puedeVer: true },
+    comisiones:     {},
+    reportes:       { puedeVer: true },
+    usuarios:       { puedeVer: true },
   },
 }
 

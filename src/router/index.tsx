@@ -15,6 +15,11 @@ import { ViajesPage } from '@/features/viajes/ViajesPage'
 import { ReservasPage } from '@/features/reservas/ReservasPage'
 import { LiquidacionesPage } from '@/features/liquidaciones/LiquidacionesPage'
 import { UsuariosPage } from '@/features/usuarios/UsuariosPage'
+import { CarrerasPage } from '@/features/carreras/CarrerasPage'
+import { EncomiendasPage } from '@/features/encomiendas/EncomiendasPage'
+import { PlanillasPage } from '@/features/planillas/PlanillasPage'
+import { SuscripcionesPage } from '@/features/suscripciones/SuscripcionesPage'
+import { ComisionesPage } from '@/features/comisiones/ComisionesPage'
 
 
 
@@ -68,6 +73,11 @@ export const router = createBrowserRouter([
           { path: '/dashboard/viajes', element: <ViajesPage /> },
           { path: '/dashboard/reservas', element: <ReservasPage /> },
           { path: '/dashboard/liquidaciones', element: <LiquidacionesPage /> },
+          { path: '/dashboard/carreras', element: <CarrerasPage /> },
+          { path: '/dashboard/encomiendas', element: <EncomiendasPage /> },
+          { path: '/dashboard/planillas', element: <PlanillasPage /> },
+          { path: '/dashboard/suscripciones', element: <SuscripcionesPage /> },
+          { path: '/dashboard/comisiones', element: <ComisionesPage /> },
           { path: '/dashboard/reportes', element: <Placeholder titulo="Reportes" /> },
           { path: '/dashboard/usuarios', element: <UsuariosPage /> },
         ],

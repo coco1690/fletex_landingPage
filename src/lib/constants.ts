@@ -3,6 +3,7 @@ export const ROLES = {
   ADMIN_REGIONAL: 'admin_regional',
   ENCARGADO_AGENCIA: 'encargado_agencia',
   CONDUCTOR: 'conductor',
+  MOTO_TAXI: 'moto_taxi',
   PASAJERO: 'pasajero',
 } as const
 

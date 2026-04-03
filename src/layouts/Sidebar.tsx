@@ -2,7 +2,8 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import {
   LayoutDashboard, MapPin, Building2, Users, Truck,
   Route, Car, BookOpen, Wallet, BarChart3,
-  UserCog, X, LogOut,
+  UserCog, X, LogOut, Bike, Package, FileText,
+  CreditCard, Percent,
 } from 'lucide-react'
 import { Logo } from '@/components/Logo'
 import { useAuthStore } from '@/store/authStore'
@@ -30,7 +31,12 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Rutas',         path: '/dashboard/rutas',         icon: <Route className="w-4 h-4" />,        modulo: 'rutas' },
   { label: 'Viajes',        path: '/dashboard/viajes',        icon: <Car className="w-4 h-4" />,          modulo: 'viajes' },
   { label: 'Reservas',      path: '/dashboard/reservas',      icon: <BookOpen className="w-4 h-4" />,     modulo: 'reservas' },
+  { label: 'Encomiendas',   path: '/dashboard/encomiendas',   icon: <Package className="w-4 h-4" />,      modulo: 'encomiendas' },
+  { label: 'Planillas',     path: '/dashboard/planillas',     icon: <FileText className="w-4 h-4" />,     modulo: 'planillas' },
   { label: 'Liquidaciones', path: '/dashboard/liquidaciones', icon: <Wallet className="w-4 h-4" />,       modulo: 'liquidaciones' },
+  { label: 'Carreras',      path: '/dashboard/carreras',      icon: <Bike className="w-4 h-4" />,         modulo: 'carreras' },
+  { label: 'Planes',        path: '/dashboard/suscripciones', icon: <CreditCard className="w-4 h-4" />,   modulo: 'suscripciones' },
+  { label: 'Comisiones',    path: '/dashboard/comisiones',    icon: <Percent className="w-4 h-4" />,      modulo: 'comisiones' },
   { label: 'Reportes',      path: '/dashboard/reportes',      icon: <BarChart3 className="w-4 h-4" />,    modulo: 'reportes' },
   { label: 'Usuarios',      path: '/dashboard/usuarios',      icon: <Users className="w-4 h-4" />,        modulo: 'usuarios' },
 ]
@@ -129,7 +135,17 @@ export function Sidebar({ onCerrar }: SidebarProps) {
           <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-3 mb-2 mt-4">
             Operaciones
           </p>
-          {NAV_ITEMS.slice(7).map(item => (
+          {NAV_ITEMS.slice(7, 14).map(item => (
+            <NavItemComponent key={item.path} item={item} onCerrar={onCerrar} />
+          ))}
+        </div>
+
+        {/* Sección administración */}
+        <div className="mb-1">
+          <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground px-3 mb-2 mt-4">
+            Administración
+          </p>
+          {NAV_ITEMS.slice(14).map(item => (
             <NavItemComponent key={item.path} item={item} onCerrar={onCerrar} />
           ))}
         </div>

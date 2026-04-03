@@ -10,7 +10,7 @@ type PlanUpdate = Database['public']['Tables']['planes_suscripcion']['Update']
 
 export const POR_PAGINA = 10
 
-interface SuscripcionesState {
+interface PlanesState {
   planes: PlanSuscripcion[]
   cargando: boolean
   error: string | null
@@ -26,7 +26,7 @@ interface SuscripcionesState {
   limpiarError: () => void
 }
 
-export const useSuscripcionesStore = create<SuscripcionesState>((set, get) => ({
+export const usePlanesStore = create<PlanesState>((set, get) => ({
   planes: [],
   cargando: false,
   error: null,

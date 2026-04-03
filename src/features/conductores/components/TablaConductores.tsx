@@ -3,6 +3,7 @@ import {
   PowerOff, Power, DollarSign,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
+import { parsearFechaLocal } from '@/lib/utils'
 import { MenuAcciones } from '@/components/shared/MenuAcciones'
 import { EstadoBadge } from '@/components/shared/EstadoBadge'
 import { cn } from '@/lib/utils'
@@ -113,7 +114,7 @@ export function TablaConductores({
                     <SuscBadge estado={conductor.estado_suscripcion} />
                     {conductor.fecha_corte && (
                       <p className="text-[10px] text-muted-foreground">
-                        Vence {new Date(conductor.fecha_corte).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })}
+                        Vence {parsearFechaLocal(conductor.fecha_corte).toLocaleDateString('es-CO', { day: 'numeric', month: 'short' })}
                       </p>
                     )}
                   </div>

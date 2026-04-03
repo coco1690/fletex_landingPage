@@ -18,7 +18,8 @@ import { UsuariosPage } from '@/features/usuarios/UsuariosPage'
 import { CarrerasPage } from '@/features/carreras/CarrerasPage'
 import { EncomiendasPage } from '@/features/encomiendas/EncomiendasPage'
 import { PlanillasPage } from '@/features/planillas/PlanillasPage'
-import { SuscripcionesPage } from '@/features/suscripciones/SuscripcionesPage'
+import { PlanesPage } from '@/features/planes/PlanesPage'
+import { PagosPage } from '@/features/pagos/PagosPage'
 import { ComisionesPage } from '@/features/comisiones/ComisionesPage'
 
 
@@ -76,7 +77,8 @@ export const router = createBrowserRouter([
           { path: '/dashboard/carreras', element: <CarrerasPage /> },
           { path: '/dashboard/encomiendas', element: <EncomiendasPage /> },
           { path: '/dashboard/planillas', element: <PlanillasPage /> },
-          { path: '/dashboard/suscripciones', element: <SuscripcionesPage /> },
+          { path: '/dashboard/planes', element: <PlanesPage /> },
+          { path: '/dashboard/pagos', element: <PagosPage /> },
           { path: '/dashboard/comisiones', element: <ComisionesPage /> },
           { path: '/dashboard/reportes', element: <Placeholder titulo="Reportes" /> },
           { path: '/dashboard/usuarios', element: <UsuariosPage /> },

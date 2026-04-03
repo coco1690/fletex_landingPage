@@ -7,6 +7,7 @@ import {
   SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { useConductoresStore, type Conductor } from './conductoresStore'
+import { parsearFechaLocal } from '@/lib/utils'
 import { useAuthStore } from '@/store/authStore'
 import { ModalConductor } from './ModalConductor'
 import { ModalPago } from './ModalPago'
@@ -137,7 +138,7 @@ export function ConductoresPage() {
               { label: 'Vence lic.', valor: new Date(conductorDetalle.fecha_vencimiento_licencia).toLocaleDateString('es-CO') },
               { label: 'Nequi',      valor: conductorDetalle.numero_nequi ?? 'No registrado' },
               { label: 'Agencia',    valor: conductorDetalle.agencia?.nombre ?? '—' },
-              { label: 'Suscripción vence', valor: conductorDetalle.fecha_corte ? new Date(conductorDetalle.fecha_corte).toLocaleDateString('es-CO') : '—' },
+              { label: 'Suscripción vence', valor: conductorDetalle.fecha_corte ? parsearFechaLocal(conductorDetalle.fecha_corte).toLocaleDateString('es-CO') : '—' },
             ]}
             onCerrar={() => setConductorDetalle(null)}
             onEditar={() => {

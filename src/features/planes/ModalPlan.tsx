@@ -9,7 +9,7 @@ import { Label }     from '@/components/ui/label'
 import { Button }    from '@/components/ui/button'
 import { Switch }    from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
-import type { PlanSuscripcion } from './suscripcionesStore'
+import type { PlanSuscripcion } from './planesStore'
 import type { Database } from '@/supabase/types'
 
 type PlanInsert = Database['public']['Tables']['planes_suscripcion']['Insert']
@@ -24,7 +24,7 @@ interface Props {
   usuarioId: string
 }
 
-export function ModalSuscripcion({
+export function ModalPlan({
   plan, onGuardar, onActualizar, onCerrar, cargando, usuarioId,
 }: Props) {
   const esEdicion = !!plan
@@ -97,115 +97,65 @@ export function ModalSuscripcion({
               <CreditCard className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <DialogTitle>
-                {esEdicion ? 'Editar plan' : 'Nuevo plan de suscripción'}
-              </DialogTitle>
-              <DialogDescription>
-                {esEdicion ? plan.nombre : 'Configura los detalles del plan'}
-              </DialogDescription>
+              <DialogTitle>{esEdicion ? 'Editar plan' : 'Nuevo plan de suscripción'}</DialogTitle>
+              <DialogDescription>{esEdicion ? plan.nombre : 'Configura los detalles del plan'}</DialogDescription>
             </div>
           </div>
         </DialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-
-          {/* ── Información del plan ── */}
           <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Información del plan
-            </p>
-
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Información del plan</p>
             <div className="space-y-1.5">
               <Label>Nombre <span className="text-destructive">*</span></Label>
               <div className="relative">
                 <CreditCard className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input
-                  placeholder="Plan Mensual"
-                  value={nombre}
-                  onChange={e => setNombre(e.target.value)}
-                  className="pl-9"
-                  autoFocus
-                />
+                <Input placeholder="Plan Mensual" value={nombre} onChange={e => setNombre(e.target.value)} className="pl-9" autoFocus />
               </div>
             </div>
-
             <div className="space-y-1.5">
               <Label>Descripción</Label>
               <div className="relative">
                 <FileText className="absolute left-3 top-3 w-3.5 h-3.5 text-muted-foreground" />
-                <textarea
-                  value={descripcion}
-                  onChange={e => setDescripcion(e.target.value)}
-                  placeholder="Descripción del plan..."
-                  rows={2}
-                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none pl-9"
-                />
+                <textarea value={descripcion} onChange={e => setDescripcion(e.target.value)} placeholder="Descripción del plan..." rows={2}
+                  className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring resize-none pl-9" />
               </div>
             </div>
           </div>
 
           <Separator />
 
-          {/* ── Precio y duración ── */}
           <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Precio y duración
-            </p>
-
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Precio y duración</p>
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1.5">
                 <Label>Precio <span className="text-destructive">*</span></Label>
                 <div className="relative">
                   <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                  <Input
-                    placeholder="50000"
-                    value={precio}
-                    type="number"
-                    min="0"
-                    onChange={e => setPrecio(e.target.value)}
-                    className="pl-9"
-                  />
+                  <Input placeholder="50000" value={precio} type="number" min="0" onChange={e => setPrecio(e.target.value)} className="pl-9" />
                 </div>
               </div>
-
               <div className="space-y-1.5">
                 <Label>Moneda</Label>
                 <div className="relative">
                   <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                  <Input
-                    placeholder="COP"
-                    value={moneda}
-                    onChange={e => setMoneda(e.target.value)}
-                    className="pl-9"
-                  />
+                  <Input placeholder="COP" value={moneda} onChange={e => setMoneda(e.target.value)} className="pl-9" />
                 </div>
               </div>
             </div>
-
             <div className="space-y-1.5">
               <Label>Duración (días) <span className="text-destructive">*</span></Label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-                <Input
-                  placeholder="30"
-                  value={duracionDias}
-                  type="number"
-                  min="1"
-                  onChange={e => setDuracionDias(e.target.value)}
-                  className="pl-9"
-                />
+                <Input placeholder="30" value={duracionDias} type="number" min="1" onChange={e => setDuracionDias(e.target.value)} className="pl-9" />
               </div>
             </div>
           </div>
 
           <Separator />
 
-          {/* ── Opciones ── */}
           <div className="space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
-              Opciones
-            </p>
-
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Opciones</p>
             <div className="flex items-center justify-between py-1">
               <div>
                 <p className="text-sm font-medium text-foreground">Incluye planilla</p>
@@ -213,7 +163,6 @@ export function ModalSuscripcion({
               </div>
               <Switch checked={incluyePlanilla} onCheckedChange={setIncluyePlanilla} />
             </div>
-
             <div className="flex items-center justify-between py-1">
               <div>
                 <p className="text-sm font-medium text-foreground">Activo</p>
@@ -223,18 +172,14 @@ export function ModalSuscripcion({
             </div>
           </div>
 
-          {/* Error */}
           {error && (
             <div className="bg-destructive/10 border border-destructive/20 rounded-xl px-3 py-2">
               <p className="text-xs text-destructive">{error}</p>
             </div>
           )}
 
-          {/* Botones */}
           <div className="flex gap-3 pt-2">
-            <Button type="button" variant="outline" onClick={onCerrar} className="flex-1">
-              Cancelar
-            </Button>
+            <Button type="button" variant="outline" onClick={onCerrar} className="flex-1">Cancelar</Button>
             <Button type="submit" disabled={cargando} className="flex-1">
               {cargando ? 'Guardando...' : esEdicion ? 'Actualizar' : 'Crear plan'}
             </Button>

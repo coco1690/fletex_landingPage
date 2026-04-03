@@ -14,7 +14,8 @@ type Modulo =
   | 'carreras'
   | 'encomiendas'
   | 'planillas'
-  | 'suscripciones'
+  | 'planes'
+  | 'pagos'
   | 'comisiones'
   | 'reportes'
   | 'usuarios'
@@ -40,7 +41,8 @@ const MATRIZ: Record<string, Record<Modulo, Partial<Permisos>>> = {
     carreras:       { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     encomiendas:    { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     planillas:      { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
-    suscripciones:  { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    planes:         { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
+    pagos:          { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     comisiones:     { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
     reportes:       { puedeVer: true, esGlobal: true },
     usuarios:       { puedeVer: true, puedeCrear: true, puedeEditar: true, puedeEliminar: true, esGlobal: true },
@@ -57,7 +59,8 @@ const MATRIZ: Record<string, Record<Modulo, Partial<Permisos>>> = {
     carreras:       { puedeVer: true },
     encomiendas:    { puedeVer: true },
     planillas:      { puedeVer: true },
-    suscripciones:  { puedeVer: true },
+    planes:         { puedeVer: true },
+    pagos:          { puedeVer: true, puedeCrear: true },
     comisiones:     { puedeVer: true },
     reportes:       { puedeVer: true },
     usuarios:       { puedeVer: true },
@@ -74,7 +77,8 @@ const MATRIZ: Record<string, Record<Modulo, Partial<Permisos>>> = {
     carreras:       { puedeVer: true },
     encomiendas:    { puedeVer: true, puedeCrear: true },
     planillas:      { puedeVer: true },
-    suscripciones:  { puedeVer: true },
+    planes:         { puedeVer: true },
+    pagos:          { puedeVer: true, puedeCrear: true },
     comisiones:     {},
     reportes:       { puedeVer: true },
     usuarios:       { puedeVer: true },
